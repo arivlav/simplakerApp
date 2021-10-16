@@ -1,0 +1,144 @@
+ .toolBarContainer {
+   display: Flex;
+   flex-direction: row;
+   /*   border-top: 1px solid #dadce0;
+    border-bottom: 1px solid #dadce0; */
+ }
+
+ .tooBarItem {
+   /* height: 28px; */
+   /* height: 40px;
+   width: 40px; */
+   padding: 30px;
+   font-family: sans-serif;
+ }
+
+ .toolBarItem:hover {
+   background: #e7e7e7;
+ }
+
+ .toolBarItem:active {
+   background: #6aabff;
+   
+ }
+
+ .btn {
+   height: 24px;
+   min-width: 24px;
+   text-align: center;
+   padding: 5px;
+ }
+
+ .btn_add::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/add.svg);
+ }
+
+ .btn_undo::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/undo.svg);
+ }
+
+ .btn_redo::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/redo.svg);
+ }
+
+ .btn_select::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/select.svg);
+ }
+
+ .btn_text::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/text_box.svg);
+ }
+
+ .btn_image::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/image.svg);
+ }
+
+ .btn_circle::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/circle.svg);
+ }
+
+ .btn_rectangle::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/rectangle.svg);
+ }
+
+ .btn_triangle::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/triangle.png);
+ }
+
+ .btn_bckgImg::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/background_image.svg);
+ }
+
+ .btn_palette::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/palette.svg);
+ }
+
+ .btn_fillColor::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/fill_color.svg);
+ }
+
+ .btn_borderColor::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/border_color.svg);
+ }
+
+ .btn_borderWeight::before {
+   background: transparent;
+   content: url(../../../../icons/rounded/border_weight.svg);
+ }
+
+ .btn_fontFamily {
+   padding-left: 10px;
+   width: max-content;
+   text-align: center;
+ }
+
+ .btn_fontFamily::after {
+   background: transparent;
+   content: url(../../../../icons/rounded/drop_down.svg);
+ }
+
+ .btn_fontSize {
+  padding-left: 10px;
+  width: max-content;
+  text-align: center;
+}
+
+.btn_fontSize::after {
+  background: transparent;
+  content: url(../../../../icons/rounded/drop_down.svg);
+}
+
+.btn_bold::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/bold.svg);
+}
+
+.btn_italic::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/italic.svg);
+}
+
+.btn_underlined::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/underlined.svg);
+}
+
+.btn_textColor::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/text_color.svg);
+}
+
+

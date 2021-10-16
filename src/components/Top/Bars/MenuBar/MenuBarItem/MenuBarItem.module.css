@@ -1,0 +1,7 @@
+.item {
+    padding: 10px 10px 10px 10px;
+}
+
+.item:hover {
+    background: #e7e7e7; /* Цвет фона под ссылкой */
+}

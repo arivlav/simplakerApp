@@ -1,0 +1,17 @@
+ .menuBar {
+   display: Flex;
+   flex-direction: row;
+   /* padding: 0 10px 0 10px; */
+ }
+
+ .menuBar a {
+   padding: 10px;
+   color: black;
+   text-decoration: none;
+ }
+
+ .menuBar a.activeLink {
+   
+   color: gold;
+  
+ }

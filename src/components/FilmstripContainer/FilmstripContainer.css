@@ -1,0 +1,6 @@
+.FilmstripContainer {
+    grid-area: FilmstripContainer;
+    background-color: #f3f3f3;
+    /* max-width: 10%; */
+  }
+

@@ -1,0 +1,11 @@
+.top {
+    grid-area: Top;
+    background-color: #f3f3f3;
+    text-align: left;
+    
+  }
+  
+/* .top.active {
+  background-color: gold;
+} */
+
