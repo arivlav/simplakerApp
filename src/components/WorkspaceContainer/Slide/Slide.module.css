@@ -1,8 +1,8 @@
 .slide {
     background-color: #ffffff;
-    margin: 20px;
-    height: 576px;
-    width: 1024px;
+    margin: 50px auto;
+    height: 404px;
+    max-width: 716px;
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
 
     

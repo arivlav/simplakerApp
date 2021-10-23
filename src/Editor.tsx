@@ -4,6 +4,7 @@ import WorkspaceContainer from './components/WorkspaceContainer/WorkspaceContain
 import './Editor.css';
 import Top from './components/Top/Top';
 import { BrowserRouter, Route } from 'react-router-dom';
+import RightBarContainer from './components/RightBarContainer/RightBarContainer';
 
 function Editor() {
   return (
@@ -12,6 +13,7 @@ function Editor() {
         <Top />
         <FilmstripContainer />
         <WorkspaceContainer />
+        <RightBarContainer />
       </div>
     </BrowserRouter>
   );

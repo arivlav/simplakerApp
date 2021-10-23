@@ -7,7 +7,7 @@ function Header() {
     return (
       <div className={`${s.header}`}>
         <Logo />
-        <Title text='Presentation without title'/>
+        <Title text='New presentation'/>
       </div>
     );
   }

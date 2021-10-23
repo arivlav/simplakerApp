@@ -1,16 +1,13 @@
 import React from 'react';
-import s from './Bars.module.css'
-import MenuBar from './MenuBar/MenuBar';
+import s from './Bars.module.css';
 import ToolBar from './ToolBar/ToolBar';
 
 function Bars() {
-    return (
-      <div className={`${s.bars}`}>
-        <MenuBar />
-        <ToolBar />
+  return (
+    <div className={`${s.bars}`}>
+      <ToolBar />
+    </div>
+  );
+}
 
-      </div>
-    );
-  }
-  
-  export default Bars;
+export default Bars;

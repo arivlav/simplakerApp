@@ -1,16 +1,16 @@
 .Editor {
   display: grid;
   grid-template-areas:
-  "Top Top"
-  "FilmstripContainer WorkspaceContainer";
-  grid-template-rows: 130px 10fr;
-  grid-template-columns: 300px 10fr;
-  grid-gap: 10px;
+  "Top Top Top"
+  "FilmstripContainer WorkspaceContainer RightBarContainer";
+  grid-template-rows: 122px 512px;
+  grid-template-columns: 280px 806px 280px;
+  grid-gap: 1px;
   text-align: center;
-  background-color: #FFFAFA;
-  margin: 0 auto;
-  max-width: 95%;
-  height: 768px;
+  background-color: #E2E2E2;
+    margin: 0 auto;
+  max-width: 1366px;
+  height: 634px;
   font-family: sans-serif;
   font-weight: 400;
 }

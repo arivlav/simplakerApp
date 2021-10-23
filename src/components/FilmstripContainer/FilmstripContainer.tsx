@@ -1,11 +1,16 @@
 import React from 'react';
 import Slide from '../WorkspaceContainer/Slide/Slide';
 import './FilmstripContainer.css'
+import SlideMiniature from './SlideMiniature/SlideMiniature';
 
 function FilmstripContainer() {
     return (
-      <div className="FilmstripContainer">       
+      <div className="FilmstripContainer">      
         {/* <Slide /> */}
+        <SlideMiniature text="Slide 1"/>
+        <SlideMiniature text="Slide 2"/>
+        <SlideMiniature text="Slide 3"/>
+        <SlideMiniature text="Slide 4"/>
       </div>
     );
   }

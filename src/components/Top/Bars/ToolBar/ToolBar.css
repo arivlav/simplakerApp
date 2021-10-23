@@ -1,6 +1,9 @@
  .toolBarContainer {
    display: Flex;
    flex-direction: row;
+   justify-content: space-evenly;
+   padding: 8px 0 8px 0;
+   background-color: #f2f2f2;
    /*   border-top: 1px solid #dadce0;
     border-bottom: 1px solid #dadce0; */
  }
@@ -9,7 +12,8 @@
    /* height: 28px; */
    /* height: 40px;
    width: 40px; */
-   padding: 30px;
+   /* padding: 30px; */
+
    font-family: sans-serif;
  }
 
@@ -18,13 +22,68 @@
  }
 
  .toolBarItem:active {
-   background: #6aabff;
+   background: #6aabff;   
+ }
+
+ /* .toolBarItem:focus {
+  background: #6aabff;   
+} */
+
+ .addSlideContainer {
+   display: flex;
+   flex-direction: row;
+   /* width: 96px; */
    
  }
 
+ .addSlideContainer::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 46px;
+  border: 1px solid #f2f2f2;
+  border-radius: 1px;
+  background-color: #8f8f8f;
+ }
+
+ .copyPasteContainer {
+  display: flex;
+  flex-direction: row;
+ }
+
+ .copyPasteContainer::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 46px;
+  border: 1px solid #f2f2f2;
+  border-radius: 1px;
+  background-color: #8f8f8f;
+ }
+
+ .primitiveContainer {
+  display: flex;
+  flex-direction: row;
+ }
+
+ .primitiveContainer::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 46px;
+  border: 1px solid #f2f2f2;
+  border-radius: 1px;
+  background-color: #8f8f8f;
+ }
+
+ .colorContainer {
+  display: flex;
+  flex-direction: row;
+ }
+
  .btn {
-   height: 24px;
-   min-width: 24px;
+   height: 36px;
+   min-width: 36px;
    text-align: center;
    padding: 5px;
  }
@@ -33,6 +92,16 @@
    background: transparent;
    content: url(../../../../icons/rounded/add.svg);
  }
+
+ .btn_export::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/export.svg);
+}
+
+.btn_play::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/play.svg);
+}
 
  .btn_undo::before {
    background: transparent;
@@ -43,6 +112,16 @@
    background: transparent;
    content: url(../../../../icons/rounded/redo.svg);
  }
+
+ .btn_copy::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/copy.svg);
+}
+
+.btn_paste::before {
+  background: transparent;
+  content: url(../../../../icons/rounded/paste.svg);
+}
 
  .btn_select::before {
    background: transparent;
@@ -99,20 +178,40 @@
    content: url(../../../../icons/rounded/border_weight.svg);
  }
 
+ .fontContainer {
+  display: flex;
+  flex-direction: row;
+ }
+
+ .fontContainer::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 46px;
+  border: 1px solid #f2f2f2;
+  border-radius: 1px;
+  background-color: #8f8f8f;
+ }
+
  .btn_fontFamily {
-   padding-left: 10px;
-   width: max-content;
+   background-color: white;
+   /* margin-left: 8px;   */
+   padding-left: 4px;
+   padding-right: 4px;
+   outline: none;
+   border: 1px solid #dad8d8;
+   width: 128px;
    text-align: center;
  }
 
- .btn_fontFamily::after {
-   background: transparent;
-   content: url(../../../../icons/rounded/drop_down.svg);
- }
-
  .btn_fontSize {
-  padding-left: 10px;
-  width: max-content;
+  background-color: white;
+  margin-left: 8px;  
+  padding-left: 4px;
+  padding-right: 4px;
+  outline: none;
+  border: 1px solid #dad8d8;
+  width: 60px;
   text-align: center;
 }
 
