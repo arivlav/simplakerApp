@@ -1,4 +1,11 @@
-.circle{
+.circle {
   background: transparent;
   content: url(../../../../../primitives/circle.png);
+}
+
+
+.s{
+  height: 404px;
+  width: 716px;
+
 }

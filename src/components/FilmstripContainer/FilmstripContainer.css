@@ -2,6 +2,7 @@
     grid-area: FilmstripContainer;
     background-color: #F1F1F1;
     height: 512px;
+    overflow: scroll;
     /* max-width: 10%; */
   }
 

@@ -5,7 +5,7 @@ import './RightBarContainer.css'
 function RightBarContainer() {
     return (
       <div className="RightBarContainer">
-        <img src="../../layout/palette.png" alt="palette" />          
+        <img src="/img/palette1.png" alt="palette" />          
       </div>
     );
   }
