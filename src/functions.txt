@@ -107,3 +107,5 @@ Message
     setColorMessage
     setSizeMessage
     setFontStyleMessage
+
+export {};
