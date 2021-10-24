@@ -1,7 +1,7 @@
 import React from 'react';
 import Slide from './Slide/Slide';
 import './WorkspaceContainer.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+
 
 
 

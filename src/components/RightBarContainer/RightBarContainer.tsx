@@ -1,17 +1,25 @@
 import React from 'react';
+import Palette from './Palette/Palette';
 
 import './RightBarContainer.css'
 
 function RightBarContainer() {
+  
     return (
       <div className="RightBarContainer">
-        <img src="/img/palette1.png" alt="palette" />          
+             <Palette />  
       </div>
     );
   }
   
   export default RightBarContainer;
 
-  // editor.slidelist.forEach(function (value) {
-  //   <Slide width={props.blabla}/>
-  // });
+  // export default function RightBarContainer() {
+  //   const [state, updateState] = React.useState("#FFF");
+
+  //   const handleInput = e => {
+  //     updateState(e.target.value);      
+  //   };
+
+  //   return <Palette value={state} onChange={handleInput} />;
+  // }

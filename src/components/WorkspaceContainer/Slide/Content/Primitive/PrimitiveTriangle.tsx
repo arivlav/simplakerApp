@@ -1,16 +1,11 @@
- import React from 'react';
+import React from 'react';
 
 function Triangle(/* props: TriangleProps */) {
-    return (
-      <div>
-          <svg height="82px" width="82px">
-            <g>
-                <polygon points="2,80 40,2 80,80" fill="none" stroke="black" stroke-width="2"/>
-            </g>
-          </svg>
-      </div>
-    );
+  return (
+    <g>
+      <path d="M 10 210 L 110 10 L 210 210 z" fill="#C71585" stroke="#008080" stroke-width="2" />
+    </g>
+  );
 }
-
 
 export default Triangle;

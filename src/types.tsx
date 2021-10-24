@@ -56,7 +56,7 @@ type Content = {
     zIndex: number;        
 }
 
-type ContentType = Image | Primitive | Message;
+type ContentType = Image | Primitive | TextBox;
 
 type Image = {
     imagePath: string;
@@ -76,7 +76,7 @@ type Point = {
     y: number;
 }
 
-type Message = {
+type TextBox = {
     value: string;
     fontFamily: string;
     fontColor: string;

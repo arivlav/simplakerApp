@@ -10,7 +10,7 @@ import s from "./Slide.module.css";
 function Slide(/* props: SlideProps */) {
     return ( 
       <div className={`${s.slide}`}>
-          <Content viewBox={"0 0 716 404"} widthContent="716px" heightContent="404px"/>
+          <Content viewBox="0 0 716 404" widthContent="716px" heightContent="404px"/>
       </div>  
     );
 }
