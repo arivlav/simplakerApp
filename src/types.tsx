@@ -1,4 +1,6 @@
-type Editor = {
+import { type } from "os";
+
+type EditorType = {
     readonly mode: Mode;   //Вынести в тип. Done
     readonly chronicle: Chronicle;
     readonly palette: Palette;
@@ -10,8 +12,8 @@ type Editor = {
 }
 
 type Chronicle = {
-    undo: Array<Editor>;
-    redo: Array<Editor>;
+    undo: Array<EditorType>;
+    redo: Array<EditorType>;
 }
 
 type Mode = "view" | "edit";
@@ -92,4 +94,23 @@ type FontStyle = "italic" | "bold" | "underline";
 // Undo
 // Redo
 
-export {};
+export type {
+    EditorType,
+    Chronicle,
+    Mode,
+    Identifier,
+    Palette,
+    Presentation,
+    Slide,
+    BackgroundImage,
+    BackgroundColor,
+    Background,
+    Content,
+    ContentType,
+    Image,
+    Primitive,
+    PrimitiveType,
+    Point,
+    TextBox,
+    FontStyle
+};

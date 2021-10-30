@@ -1,5 +1,4 @@
 import React from 'react';
-import Logo from '../../Top/Header/Logo/Logo';
 import Content from './Content/Content';
 import s from "./Slide.module.css";
 

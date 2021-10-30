@@ -2,20 +2,18 @@ import React from 'react';
 import FilmstripContainer from './components/FilmstripContainer/FilmstripContainer';
 import WorkspaceContainer from './components/WorkspaceContainer/WorkspaceContainer';
 import './Editor.css';
-import Top from './components/Top/Top';
-import { BrowserRouter, Route } from 'react-router-dom';
+import TopBar from './components/TopBar/TopBar';
 import RightBarContainer from './components/RightBarContainer/RightBarContainer';
+
 
 function Editor() {
   return (
-    <BrowserRouter>
       <div className="Editor">
-        <Top />
+        <TopBar />
         <FilmstripContainer />
         <WorkspaceContainer />
         <RightBarContainer />
       </div>
-    </BrowserRouter>
   );
 }
 

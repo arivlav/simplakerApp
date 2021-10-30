@@ -1,9 +1,9 @@
 import React from 'react';
 import Bars from './Bars/Bars';
 import Header from './Header/Header';
-import s from './Top.module.css'
+import s from './TopBar.module.css'
 
-function Top() {
+function TopBar() {
     return (
       <div className={`${s.top}`}>
           <Header />
@@ -12,4 +12,4 @@ function Top() {
     );
   }
   
-  export default Top;
+  export default TopBar;
