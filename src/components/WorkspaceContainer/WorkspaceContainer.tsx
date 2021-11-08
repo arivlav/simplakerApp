@@ -1,5 +1,5 @@
 import React from 'react';
-import Slide from './Slide/Slide';
+import Slide from '../Slide/Slide';
 import './WorkspaceContainer.css';
 
 
@@ -8,7 +8,9 @@ import './WorkspaceContainer.css';
 function WorkspaceContainer() {
   return (
     <div className="WorkspaceContainer">
-      <Slide />     
+      <div className="WorkspaceContainer__inner">
+        <Slide className="slide" text="Hello" /> 
+      </div>    
     </div>
   );
 }
