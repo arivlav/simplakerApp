@@ -6,11 +6,11 @@ type TitleProps = {
 }
 
 function Title(props: TitleProps) {
-    return (
-      <div className={`${s.title}`}>      
-        {props.text}
-      </div>
-    );
-  }
+  return (
+    <div className={`${s.title}`}>      
+      {props.text}
+    </div>
+  );
+}
   
-  export default Title;
+export default Title;

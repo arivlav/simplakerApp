@@ -1,9 +1,7 @@
 .RightBarContainer {
-    grid-area: RightBarContainer;
-    background-color: #F1F1F1;
-    height: 512px;
-    /* max-width: 10%; */
-  }
+  grid-area: RightBarContainer;
+  background-color: #F1F1F1;
+}
 
 .img {
   width: 100px;
