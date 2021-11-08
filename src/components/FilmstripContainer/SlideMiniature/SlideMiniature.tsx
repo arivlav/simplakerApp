@@ -10,7 +10,11 @@ type propsSlideMiniature  = {
 function SlideMiniature(props: propsSlideMiniature) {
     return (
       <div className="slideMiniature">
-        {props.text}
+        <div className="slideMiniature-inner slideMiniature-ratio">
+          <div className="slideMiniature-content">
+            {props.text}
+          </div>  
+        </div>
       </div>
     );
   }

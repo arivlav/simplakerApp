@@ -1,7 +1,23 @@
 .slideMiniature {
+  margin: 25px 25px;
+}
+
+.slideMiniature-inner {
+  position: relative;
+  height: 0;
+  border: none;
+}
+
+.slideMiniature-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-color: #ffffff;
-  margin: 50px auto;
-  height: 101px;
-  width: 179px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);  
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.slideMiniature-ratio {
+  padding-top: 56.25%;
 }
