@@ -1,0 +1,7 @@
+.header {
+    grid-area: Header;
+    display: flex;
+    flex-direction: row;
+    background-color: #00808075; 
+    height: 56px;  
+}

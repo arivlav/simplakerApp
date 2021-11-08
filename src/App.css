@@ -1,10 +1,12 @@
 .Editor {
   display: grid;
   grid-template-columns: 20% 65% 14.9%;
-  grid-template-rows: 104px;
+  grid-template-rows: 56px 48px auto 40px;
   grid-template-areas:
+  "Header Header Header"
   "Top Top Top"
-  "FilmstripContainer WorkspaceContainer RightBarContainer";
+  "FilmstripContainer WorkspaceContainer RightBarContainer"
+  "Footer Footer Footer";
   grid-gap: 1px;
   text-align: center;
   background-color: #E2E2E2;

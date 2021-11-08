@@ -1,4 +1,11 @@
 .WorkspaceContainer {
   grid-area: WorkspaceContainer;
   background-color: #E2E2E2;
+  display: table;
+  overflow-y: auto;
+}
+
+.WorkspaceContainer__inner {
+  display: table-cell;
+  vertical-align: middle;
 }

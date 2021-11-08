@@ -1,21 +1,16 @@
-import './FilmstripContainer.css'
-import SlideMiniature from './SlideMiniature/SlideMiniature';
+import './FilmstripContainer.css';
+import '../Slide/Slide.css';
+import Slide from '../Slide/Slide';
 
 function FilmstripContainer() {
     return (
       <div className="FilmstripContainer">      
-        {/* <Slide /> */}
-        <SlideMiniature text="Slide 1"/>
-        <SlideMiniature text="Slide 2"/>
-        <SlideMiniature text="Slide 3"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
-        <SlideMiniature text="Slide 4"/>
+        <Slide className="slide_miniature" text="Slide 1"/>
+        <Slide className="slide_miniature" text="Slide 2"/>
+        <Slide className="slide_miniature" text="Slide 3"/>
+        <Slide className="slide_miniature" text="Slide 4"/>
+        <Slide className="slide_miniature" text="Slide 4"/>
+        <Slide className="slide_miniature" text="Slide 4"/>
       </div>
     );
   }
