@@ -1,19 +1,10 @@
 import React from 'react';
 import s from './Logo.module.css';
-// import smplLogo from "./smplLogo.png"
-
-// function Logo() {
-//     return (
-//       <div className={`${s.logo}`}>
-//         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/SIMPLE-Logo.png/800px-SIMPLE-Logo.png" alt="simplaker"/>
-//       </div>
-//     );
-//   }
 
 function Logo() {
   return (
     <div className={`${s.logo}`}>
-      {/* <img src="/img/smpl_logo_violetred.png" alt="logo"/> */}
+      
       <svg height="36" viewBox="0 0 121 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M113.392 25.5013L119.726 26.5584C118.908 28.8809 117.628 30.6479 115.868
           31.8593C114.117 33.0784 111.918 33.6803 109.279 33.6803C105.105 33.6803 102.018

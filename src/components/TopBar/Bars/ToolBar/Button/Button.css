@@ -85,6 +85,53 @@
      content: url(../../../../../icons/rounded/triangle.png);
    }
   
+   .btn_fontFamily {
+    background-color: white;
+    margin-left: 8px;  
+    padding-left: 4px;
+    padding-right: 4px;
+    outline: none;
+    border: 1px solid #dad8d8;
+    width: 128px;
+    text-align: center;
+  }
+ 
+  .btn_fontSize {
+   background-color: white;
+   margin-left: 8px;  
+   padding-left: 4px;
+   padding-right: 4px;
+   outline: none;
+   border: 1px solid #dad8d8;
+   width: 60px;
+   text-align: center;
+ }
+ 
+ .btn_fontSize::after {
+   background: transparent;
+   content: url(../../../../../icons/rounded/drop_down.svg);
+ }
+ 
+ .btn_bold::before {
+   background: transparent;
+   content: url(../../../../../icons/rounded/bold.svg);
+ }
+ 
+ .btn_italic::before {
+   background: transparent;
+   content: url(../../../../../icons/rounded/italic.svg);
+ }
+ 
+ .btn_underlined::before {
+   background: transparent;
+   content: url(../../../../../icons/rounded/underlined.svg);
+ }
+ 
+ .btn_textColor::before {
+   background: transparent;
+   content: url(../../../../../icons/rounded/text_color.svg);
+ }
+
    .btn_bckgImg::before {
      background: transparent;
      content: url(../../../../../icons/rounded/background_image.svg);
@@ -109,4 +156,6 @@
      background: transparent;
      content: url(../../../../../icons/rounded/border_weight.svg);
    } 
+ 
+
  

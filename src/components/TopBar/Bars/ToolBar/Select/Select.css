@@ -1,22 +1,21 @@
+.select {
+  background-color: white;
+  margin-left: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  outline: none;
+  border: 1px solid #dad8d8;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12pt;
+  height: 30px;
 
-.select_fontFamily {
-    background-color: white;
-    /* margin-left: 8px;   */
-    padding-left: 4px;
-    padding-right: 4px;
-    outline: none;
-    border: 1px solid #dad8d8;
-    width: 128px;
-    text-align: center;
-  }
- 
-  .select_fontSize {
-   background-color: white;
-   margin-left: 8px;  
-   padding-left: 4px;
-   padding-right: 4px;
-   outline: none;
-   border: 1px solid #dad8d8;
-   width: 60px;
-   text-align: center;
- }
+}
+
+.select__fontFamily {
+  width: 128px;
+}
+
+.select__fontSize {
+  width: 60px;
+}

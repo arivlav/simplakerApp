@@ -1,20 +1,13 @@
  .toolBarContainer {
-   display: Flex;
+   display: flex;
    flex-direction: row;
-   justify-content: space-evenly;
-   /* padding: 8px 0 8px 0; */
+   justify-content: flex-start;
+   max-width: 1368px;
    margin-top: 5px;
    background-color: #f2f2f2;
-   /*   border-top: 1px solid #dadce0;
-    border-bottom: 1px solid #dadce0; */
  }
 
  .tooBarItem {
-   /* height: 28px; */
-   /* height: 40px;
-   width: 40px; */
-   /* padding: 30px; */
-
    font-family: sans-serif;
  }
 
@@ -26,20 +19,13 @@
    background: #6aabff;   
  }
 
- /* .toolBarItem:focus {
-  background: #6aabff;   
-} */
-
- .addSlideContainer {
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: space-around;
-   /* width: 96px; */
-   
+ .itemGroupContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
  }
-
- .addSlideContainer::after {
+ .itemGroupContainer::after {
   content: '';
   display: block;
   width: 2px;
@@ -48,110 +34,5 @@
   border-radius: 1px;
   background-color: #8f8f8f;
  }
-
- .copyPasteContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
- }
-
- .copyPasteContainer::after {
-  content: '';
-  display: block;
-  width: 2px;
-  height: 36px;
-  border: 1px solid #f2f2f2;
-  border-radius: 1px;
-  background-color: #8f8f8f;
- }
-
- .primitiveContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
- }
-
- .primitiveContainer::after {
-  content: '';
-  display: block;
-  width: 2px;
-  height: 36px;
-  border: 1px solid #f2f2f2;
-  border-radius: 1px;
-  background-color: #8f8f8f;
- }
-
- .colorContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
- }
-
- .fontContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
- }
-
- .fontContainer::after {
-  content: '';
-  display: block;
-  width: 2px;
-  height: 36px;
-  border: 1px solid #f2f2f2;
-  border-radius: 1px;
-  background-color: #8f8f8f;
- }
-
- .btn_fontFamily {
-   background-color: white;
-   /* margin-left: 8px;   */
-   padding-left: 4px;
-   padding-right: 4px;
-   outline: none;
-   border: 1px solid #dad8d8;
-   width: 128px;
-   text-align: center;
- }
-
- .btn_fontSize {
-  background-color: white;
-  margin-left: 8px;  
-  padding-left: 4px;
-  padding-right: 4px;
-  outline: none;
-  border: 1px solid #dad8d8;
-  width: 60px;
-  text-align: center;
-}
-
-.btn_fontSize::after {
-  background: transparent;
-  content: url(../../../../icons/rounded/drop_down.svg);
-}
-
-.btn_bold::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/bold.svg);
-}
-
-.btn_italic::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/italic.svg);
-}
-
-.btn_underlined::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/underlined.svg);
-}
-
-.btn_textColor::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/text_color.svg);
-}
 
 
