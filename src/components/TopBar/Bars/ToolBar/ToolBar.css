@@ -2,7 +2,8 @@
    display: Flex;
    flex-direction: row;
    justify-content: space-evenly;
-   padding: 8px 0 8px 0;
+   /* padding: 8px 0 8px 0; */
+   margin-top: 5px;
    background-color: #f2f2f2;
    /*   border-top: 1px solid #dadce0;
     border-bottom: 1px solid #dadce0; */
@@ -32,6 +33,8 @@
  .addSlideContainer {
    display: flex;
    flex-direction: row;
+   align-items: center;
+   justify-content: space-around;
    /* width: 96px; */
    
  }
@@ -40,7 +43,7 @@
   content: '';
   display: block;
   width: 2px;
-  height: 46px;
+  height: 36px;
   border: 1px solid #f2f2f2;
   border-radius: 1px;
   background-color: #8f8f8f;
@@ -49,13 +52,15 @@
  .copyPasteContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
  }
 
  .copyPasteContainer::after {
   content: '';
   display: block;
   width: 2px;
-  height: 46px;
+  height: 36px;
   border: 1px solid #f2f2f2;
   border-radius: 1px;
   background-color: #8f8f8f;
@@ -64,13 +69,15 @@
  .primitiveContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
  }
 
  .primitiveContainer::after {
   content: '';
   display: block;
   width: 2px;
-  height: 46px;
+  height: 36px;
   border: 1px solid #f2f2f2;
   border-radius: 1px;
   background-color: #8f8f8f;
@@ -79,115 +86,22 @@
  .colorContainer {
   display: flex;
   flex-direction: row;
- }
-
- .btn {
-   height: 36px;
-   min-width: 36px;
-   text-align: center;
-   padding: 5px;
- }
-
- .btn_add::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/add.svg);
- }
-
- .btn_export::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/export.svg);
-}
-
-.btn_play::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/play.svg);
-}
-
- .btn_undo::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/undo.svg);
- }
-
- .btn_redo::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/redo.svg);
- }
-
- .btn_copy::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/copy.svg);
-}
-
-.btn_paste::before {
-  background: transparent;
-  content: url(../../../../icons/rounded/paste.svg);
-}
-
- .btn_select::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/select.svg);
- }
-
- .btn_text::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/text_box.svg);
- }
-
- .btn_image::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/image.svg);
- }
-
- .btn_circle::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/circle.svg);
- }
-
- .btn_rectangle::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/rectangle.svg);
- }
-
- .btn_triangle::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/triangle.png);
- }
-
- .btn_bckgImg::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/background_image.svg);
- }
-
- .btn_palette::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/palette.svg);
- }
-
- .btn_fillColor::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/fill_color.svg);
- }
-
- .btn_borderColor::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/border_color.svg);
- }
-
- .btn_borderWeight::before {
-   background: transparent;
-   content: url(../../../../icons/rounded/border_weight.svg);
+  align-items: center;
+  justify-content: space-around;
  }
 
  .fontContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
  }
 
  .fontContainer::after {
   content: '';
   display: block;
   width: 2px;
-  height: 46px;
+  height: 36px;
   border: 1px solid #f2f2f2;
   border-radius: 1px;
   background-color: #8f8f8f;
