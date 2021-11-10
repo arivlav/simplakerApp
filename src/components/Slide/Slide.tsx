@@ -6,14 +6,12 @@ type propsSlide  = {
   text: string;
 }
 
-
-
 function Slide(props: propsSlide) {
     return (
       <div className={props.className}>
         <div className="slide__inner slide__inner_ratio">
           <div className="slide__content">
-            {props.text}
+            {props.text}            
           </div>  
         </div>
       </div>

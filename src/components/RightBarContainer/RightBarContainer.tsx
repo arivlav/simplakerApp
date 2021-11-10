@@ -1,13 +1,19 @@
-import React from 'react';
-import Palette from './Palette/Palette';
+import React, { useState } from 'react';
+import ColorPicker from './ColorPicker/ColorPicker';
+
 
 import './RightBarContainer.css'
 
 function RightBarContainer() {
+  // const [state, updateState] = useState("#FFF");
+
+  // const handleInput = (event: string) => {
+  //   updateState(event.target.value);
+  // }
   
     return (
       <div className="RightBarContainer">
-             <Palette />  
+             <ColorPicker />  
       </div>
     );
   }
