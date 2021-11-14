@@ -25,7 +25,7 @@ function ColorPicker() {
             </div>
             {currentColor};
             <div>
-                <svg width="300" height="800" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <svg width="100%" height="400" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="45" cy="300" r="20" fill={currentColor} />
                     <text x="75" y="305" fill={currentColor} fontFamily="Roboto" fontStyle="bold" fontSize="16pt">
                         Test ColorPicker

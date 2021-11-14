@@ -1,7 +1,7 @@
 .Editor {
   display: grid;
   grid-template-columns: 20% 65% 14.9%;
-  grid-template-rows: 56px 48px auto 40px;
+  grid-template-rows: 56px 48px calc(100vh - 144px) 40px;
   grid-template-areas:
   "Header Header Header"
   "Top Top Top"
@@ -15,7 +15,7 @@
   font-weight: 400;
   min-width: 800px;
   height: 100vh;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 
