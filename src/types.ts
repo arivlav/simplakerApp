@@ -1,9 +1,7 @@
-import { type } from "os";
-
-type EditorType = {
+type Editor = {
     readonly mode: Mode;   //Вынести в тип. Done
     readonly chronicle: Chronicle;
-    readonly palette: Palette;
+    // readonly palette: Palette;
     //если в селектид слайд один слайд, то он работает, как текущий, и можно выбирать контент
     //если выбрано более одного слайда, то выбор контента слетает.
 
@@ -12,18 +10,18 @@ type EditorType = {
 }
 
 type Chronicle = {
-    undo: Array<EditorType>;
-    redo: Array<EditorType>;
+    undo: Array<Editor>;
+    redo: Array<Editor>;
 }
 
 type Mode = "view" | "edit";
 
-type Identifier = string; //А почему не сразу стринг там, где нужен id? Тут особая какая то строка будет. Все строки по какому-то шаблону 
+type Identifier = String; //А почему не сразу стринг там, где нужен id? Тут особая какая то строка будет. Все строки по какому-то шаблону 
 
-type Palette = {
-    readonly currentColor: string;
-    colorList: Array<string>; //здесь перечислим цвета 
-}
+// type Palette = {
+//     readonly currentColor: string;
+//     colorList: Array<string>; //здесь перечислим цвета 
+// }
 
 type Presentation = {
     title: string;
@@ -34,7 +32,7 @@ type Slide = {
     id: Identifier;
     background: Background;
     contentList: Array<Content>; 
-    selectedContents: Array<Identifier>; //для записи выбранных элементов на странице
+    //selectedContents: Array<Identifier>; //для записи выбранных элементов на странице
 }
 
 type BackgroundImage = {
@@ -88,18 +86,16 @@ type TextBox = {
 
 type FontStyle = "italic" | "bold" | "underline"; 
 
-
-
 // Export
 // Undo
 // Redo
 
 export type {
-    EditorType,
+    Editor,
     Chronicle,
     Mode,
     Identifier,
-    Palette,
+    // Palette,
     Presentation,
     Slide,
     BackgroundImage,

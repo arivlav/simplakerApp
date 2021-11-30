@@ -1,13 +1,12 @@
-import FilmstripContainer from './components/FilmstripContainer/FilmstripContainer';
-import WorkspaceContainer from './components/WorkspaceContainer/WorkspaceContainer';
+import FilmstripContainer from 'src/components/FilmstripContainer/FilmstripContainer';
+import WorkspaceContainer from 'src/components/WorkspaceContainer/WorkspaceContainer';
 import './App.css';
-import TopBar from './components/TopBar/TopBar';
-import Header from './components/Header/Header';
-import RightBarContainer from './components/RightBarContainer/RightBarContainer';
-import Footer from './components/Footer/Footer';
+import TopBar from 'src/components/TopBar/TopBar';
+import Header from 'src/components/Header/Header';
+import RightBarContainer from 'src/components/RightBarContainer/RightBarContainer';
+import Footer from 'src/components/Footer/Footer';
 
-
-function App() {
+function App () {
   return (
       <div className="Editor">
         <Header />

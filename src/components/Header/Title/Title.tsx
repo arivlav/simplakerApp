@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Title.module.css'
 
 type TitleProps = {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
   text: string;
 }
 

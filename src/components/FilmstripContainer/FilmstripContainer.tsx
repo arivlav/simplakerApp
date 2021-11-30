@@ -1,6 +1,6 @@
 import './FilmstripContainer.css';
-import '../Slide/Slide.css';
-import Slide from '../Slide/Slide';
+import 'src/components/Slide/Slide.css';
+import Slide from 'src/components/Slide/Slide';
 
 function FilmstripContainer() {
     return (
