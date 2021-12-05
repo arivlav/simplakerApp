@@ -4,7 +4,7 @@ import { defaultSlide } from "src/store/states/defaultSlideState"
 export const defaultEditor: Editor = {
     mode: 'edit',
     presentation: {
-        title: 'New presentetion',
+        title: 'New present',
         slideList: [
             defaultSlide          
         ]

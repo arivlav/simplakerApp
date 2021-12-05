@@ -1,20 +1,30 @@
 import React from 'react';
 import s from './Title.module.css'
-import { useSelector} from 'react-redux'
-import {RootState} from 'src/store/store'
+import { connect } from 'react-redux'
+import { RootState } from 'src/store/store'
+import { changeTitle } from 'src/store/actionCreators/editorAction'
 
-type TitleProps = {
-  // onClick: React.MouseEventHandler<HTMLButtonElement>;
-  // text: string;
-}
-
-function Title(props: TitleProps) {
-  const title = useSelector((state: RootState) => state.editor.presentation.title);
+function Title(props: Props) {
   return (
-    <div className={`${s.title}`}>      
-      {title}
+    <div onClick={ () => props.changeTitle('asdadsasd') } className={`${s.title}`}>      
+       { props.title }
     </div>
   );
 }
   
-export default Title;
+function mapStateToProps(state: RootState) {
+  return {title: state.editor.presentation.title}
+}
+
+const mapDispatchToProps = (dispatch: Function) => {
+    return {
+        changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
+    }
+}
+
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
+
+type Props = StateProps & DispatchProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(Title);
