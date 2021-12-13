@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Button from './Button/Button';
 import Select from './Select/Select';
 import './ToolBar.css';
@@ -22,18 +23,70 @@ let fontSizeBase = [
   { value: '16'},
 ];
 
+function newPresentation() {
+  
+}
+
+const buttonsList = [
+  [
+    {
+      title: "New presentation",
+      className: "btn btn_newFile",
+      onclick: newPresentation  
+    },
+    {
+      title: "Open project",
+      className: "btn btn_openFile",
+      onclick: newPresentation
+    },
+    {
+      title: "Save presentation",
+      className: "btn btn_saveFile",
+      onclick: newPresentation
+    },
+    {
+      title: "Export presentation",
+      className: "btn btn_export",
+      onclick: newPresentation
+    },
+    {
+      title: "Start slideshow", 
+      className: "btn btn_play",
+      onclick: newPresentation
+    }
+  ],
+  [
+    {
+      title: "Add slide",
+      className: "btn btn_add",
+      onclick: newPresentation
+    },
+    {
+      title: "Open project",
+      className: "btn btn_openFile",
+      onclick: newPresentation
+    },
+    {
+      title: "Save presentation",
+      className: "btn btn_saveFile",
+      onclick: newPresentation
+    },
+    {
+      title: "Export presentation",
+      className: "btn btn_export",
+      onclick: newPresentation
+    },
+  ],
+]
+
 
 function ToolBar() {
-
   return (
     <div className="toolBarContainer">
-
-      <div className="itemGroupContainer">
-        <Button title="Add slide" className="btn btn_add" />
-        <Button title="Export presentation" className="btn btn_export" />
-        <Button title="Start slideshow" className="btn btn_play" />
-      </div>
-
+      {buttonsList.map(
+        (btnGroup, btnGroupNumber) => 
+          <div className="itemGroupContainer" key={`btnGroup${btnGroupNumber}`} >{btnGroup.map((button, btnNumber) => <Button key={`btn${btnGroupNumber}${btnNumber}`} title={button.title} className={button.className} onclick={button.onclick} />)}</div>)}
+      {/* 
       <div className="itemGroupContainer">
         <Button title="Copy" className="btn btn_copy" />
         <Button title="Paste" className="btn btn_paste" />
@@ -65,7 +118,7 @@ function ToolBar() {
         <Button title="Fill color" className="btn btn_fillColor" />
         <Button title="Border color" className="btn btn_borderColor" />
         <Button title="Border weight" className="btn btn_borderWeight" />
-      </div>
+      </div> */}
 
     </div>
   );

@@ -1,19 +1,9 @@
 import React from 'react';
 import s from './Logo.module.css';
-// import smplLogo from "./smplLogo.png"
-
-// function Logo() {
-//     return (
-//       <div className={`${s.logo}`}>
-//         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/SIMPLE-Logo.png/800px-SIMPLE-Logo.png" alt="simplaker"/>
-//       </div>
-//     );
-//   }
 
 function Logo() {
   return (
     <div className={`${s.logo}`}>
-      {/* <img src="/img/smpl_logo_violetred.png" alt="logo"/> */}
       <svg height="36" viewBox="0 0 121 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M113.392 25.5013L119.726 26.5584C118.908 28.8809 117.628 30.6479 115.868
           31.8593C114.117 33.0784 111.918 33.6803 109.279 33.6803C105.105 33.6803 102.018
@@ -58,7 +48,7 @@ function Logo() {
           33.1401V0H95.5552V33.1401H89.2049ZM113.754 19.0816C113.708 17.2375 113.237 15.8409 112.334
           14.8841C111.432 13.9274 110.328 13.449 109.032 13.449C107.643 13.449 106.501 13.9582 105.598
           14.969C104.696 15.9721 104.248 17.3455 104.263 19.0816H113.754V19.0816Z" fill="black" />
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.9317 1.58679H30.7869V7.16964H24.9317V1.58679Z" fill="#C71585" />
+        <path fillRule="evenodd" clipRule="evenodd" d="M24.9317 1.58679H30.7869V7.16964H24.9317V1.58679Z" fill="#C71585" />
         <path d="M73.0499 41.4045H75.1009V42.5502C75.8331 41.6585 76.7086 41.2127 77.7219 41.2127C78.2597
           41.2127 78.7271 41.3235 79.1216 41.545C79.5188 41.7666 79.8431 42.1017 80.0971 42.5502C80.4646
           42.1017 80.8645 41.7666 81.2914 41.545C81.7183 41.3235 82.175 41.2127 82.6614 41.2127C83.2775
