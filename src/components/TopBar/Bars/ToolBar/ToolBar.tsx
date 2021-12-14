@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { store } from 'src/store/store';
 import Button from './Button/Button';
 import Select from './Select/Select';
 import './ToolBar.css';
 import './Button/Button.css';
+import { showModal } from 'src/store/actionCreators/viewAction'
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -24,7 +25,14 @@ let fontSizeBase = [
 ];
 
 function newPresentation() {
-  
+  console.log(store.getState().view.modal.active);
+  store.dispatch(showModal({
+    active: true,
+    header: '<h2>Подтвержедние</h2>',
+    body: '<p>real?</p>',
+    footer: '<a></a>',
+  }));
+  console.log(store.getState().view.modal.active);
 }
 
 const buttonsList = [

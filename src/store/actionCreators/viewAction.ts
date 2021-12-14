@@ -1,10 +1,17 @@
 import { AnyAction } from 'redux'
-import {SHOW_MODAL} from 'src/store/ruducers/viewReducer' 
+import { SHOW_MODAL, CLOSE_MODAL } from 'src/store/ruducers/viewReducer'
+import { ModalType } from 'src/store/store'; 
 
 
-export function showModal(active: boolean): AnyAction {
+export function showModal(modal: ModalType): AnyAction {
     return {
         type: SHOW_MODAL,
-        active: active,
+        modal: modal,
+    }
+}
+
+export function closeModal(): AnyAction {
+    return {
+        type: CLOSE_MODAL,
     }
 }

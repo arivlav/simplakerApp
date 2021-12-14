@@ -4,11 +4,14 @@ import { Editor } from "src/types"
 import { defaultEditor } from "src/store/states/defaultEditorState"
 
 export type View = {
-    modalConfirm: ModalConfirm
+    modal: ModalType
 }
 
-export type ModalConfirm = {
-    active: boolean
+export type ModalType = {
+    active: boolean,
+    header: string,
+    body: string,
+    footer: string,
 }
 
 export type RootState = {
@@ -19,8 +22,11 @@ export type RootState = {
 export const defaultState: RootState = {
     editor: defaultEditor,
     view: {
-        modalConfirm: {
-            active: true
+        modal: {
+            active: true,
+            header: '',
+            body: '',
+            footer: '',
         }
     }
 }

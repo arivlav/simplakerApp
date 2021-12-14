@@ -5,7 +5,7 @@ import TopBar from 'src/components/TopBar/TopBar';
 import Header from 'src/components/Header/Header';
 import RightBarContainer from 'src/components/RightBarContainer/RightBarContainer';
 import Footer from 'src/components/Footer/Footer';
-import ModalConfirm from 'src/components/ModalConfirm/ModalConfirm';
+import Modal from 'src/components/Modal/Modal';
 
 function App () {
   return (
@@ -16,7 +16,7 @@ function App () {
         <WorkspaceContainer />
         <RightBarContainer />
         <Footer />
-        <ModalConfirm header='' body='' footer='' />
+        <Modal />
       </div>
   );
 }
