@@ -25,14 +25,14 @@ let fontSizeBase = [
 ];
 
 function newPresentation() {
-  console.log(store.getState().view.modal.active);
-  store.dispatch(showModal({
-    active: true,
-    header: '<h2>Подтвержедние</h2>',
-    body: '<p>real?</p>',
-    footer: '<a></a>',
-  }));
-  console.log(store.getState().view.modal.active);
+  // console.log(store.getState().view.modal.active);
+  // store.dispatch(showModal({
+  //   active: true,
+  //   header: '<h2>Подтвержедние</h2>',
+  //   body: '<p>real?</p>',
+  //   footer: '<a></a>',
+  // }));
+  // console.log(store.getState().view.modal.active);
 }
 
 const buttonsList = [
