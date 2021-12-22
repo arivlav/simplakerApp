@@ -11,10 +11,8 @@ export const viewReducer = (view: View, action: AnyAction): View => {
                 ...view,
                 modal: {
                     ...view.modal,
-                    active: action.modal.active,
-                    header: action.modal.header,
-                    body: action.modal.body,
-                    footer: action.modal.footer,
+                    active: true,
+                    type: action.modal.type,
                 }
             }
         case CLOSE_MODAL:

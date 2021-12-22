@@ -2,16 +2,10 @@ import { createStore, Store } from 'redux'
 import { rootReducer } from 'src/store/ruducers/rootReducer'
 import { Editor } from "src/types"
 import { defaultEditor } from "src/store/states/defaultEditorState"
+import { ModalStateType } from 'src/components/Modal/Modal'
 
 export type View = {
-    modal: ModalType
-}
-
-export type ModalType = {
-    active: boolean,
-    header: string,
-    body: string,
-    footer: string,
+    modal: ModalStateType
 }
 
 export type RootState = {
@@ -24,9 +18,7 @@ export const defaultState: RootState = {
     view: {
         modal: {
             active: true,
-            header: '',
-            body: '',
-            footer: '',
+            type: 1,
         }
     }
 }
