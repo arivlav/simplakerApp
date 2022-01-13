@@ -4,17 +4,16 @@ import { defaultSlide } from "src/store/states/defaultSlideState"
 import { AnyAction } from "redux"
 import { generateIdentifier } from 'src/helpers/editorHelper';
 
-const CHANGE_STATE_EDITOR = 'CHANGE_STATE_EDITOR';
-const CHANGE_TITLE = 'CHANGE_TITLE';
-const NEW_PRESENTATION = 'NEW_PRESENTATION';
-const SAVE_PRESENTATION = 'SAVE_PRESENTATION';
-const OPEN_PRESENTATION = 'OPEN_PRESENTATION';
-const EXPORT_PRESENTATION = 'EXPORT_PRESENTATION';
-const TOGGLE_PRESENTATION_MODE = 'TOGGLE_PRESENTATION_MODE';
-const ADD_SLIDE = 'ADD_SLIDE';
-const DELETE_SLIDES = 'DELETE_SLIDES';
-
-export { CHANGE_TITLE, NEW_PRESENTATION, SAVE_PRESENTATION, OPEN_PRESENTATION, EXPORT_PRESENTATION, TOGGLE_PRESENTATION_MODE, ADD_SLIDE, DELETE_SLIDES, CHANGE_STATE_EDITOR }
+export const CHANGE_STATE_EDITOR = 'CHANGE_STATE_EDITOR';
+export const CHANGE_TITLE = 'CHANGE_TITLE';
+export const NEW_PRESENTATION = 'NEW_PRESENTATION';
+export const SAVE_PRESENTATION = 'SAVE_PRESENTATION';
+export const OPEN_PRESENTATION = 'OPEN_PRESENTATION';
+export const EXPORT_PRESENTATION = 'EXPORT_PRESENTATION';
+export const TOGGLE_PRESENTATION_MODE = 'TOGGLE_PRESENTATION_MODE';
+export const ADD_SLIDE = 'ADD_SLIDE';
+export const DELETE_SLIDES = 'DELETE_SLIDES';
+export const ACTIVE_SLIDE = 'ACTIVE_SLIDE';
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
     switch (action.type) {
@@ -56,6 +55,14 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ]
                 }
             }
+        case ACTIVE_SLIDE:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    activeSlide: action.slide,    
+                }
+            }    
         case DELETE_SLIDES:
             let newSlideList: Array<Slide> = [];
             let deleteSlides: Array<Identifier> = action.slides;

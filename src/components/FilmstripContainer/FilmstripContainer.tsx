@@ -11,8 +11,7 @@ function FilmstripContainer(props: Props) {
         {props.slideList.map(
           (slide, index) => <Slide 
             key={`slide-${slide.id}`} 
-            className={(props.activeSlide == slide.id) ? "slide-miniature-inner slide-miniature_active" : "slide-miniature-inner"} 
-            text={`Slide ${index+1}`} 
+            className={(props.activeSlide == slide.id) ? "slide-miniature-inner slide-miniature_active" : "slide-miniature-inner"}  
             slide={slide}/>
         )}
       </div>
