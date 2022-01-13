@@ -1,12 +1,13 @@
 import React from 'react';
 import s from './Title.module.css'
 import { connect } from 'react-redux'
-import { RootState } from 'src/store/store'
-import { changeTitle } from 'src/store/actionCreators/editorAction'
+import { RootState, store } from 'src/store/store'
+import { turnRightBar } from 'src/store/actionCreators/viewAction'
+import { PRESENTATION_TITLE_FORM } from 'src/components/RightBarContainer/RightBarContainer'
 
-function Title(props: Props) {
+function Title(props: StateProps) {
   return (
-    <div onClick={ () => props.changeTitle('asdadsasd') } className={`${s.title}`}>      
+    <div onClick={ () => store.dispatch(turnRightBar(PRESENTATION_TITLE_FORM)) } className={`${s.title}`}>      
        { props.title }
     </div>
   );
@@ -16,15 +17,7 @@ function mapStateToProps(state: RootState) {
   return {title: state.editor.presentation.title}
 }
 
-const mapDispatchToProps = (dispatch: Function) => {
-    return {
-        changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
-    }
-}
 
 type StateProps = ReturnType<typeof mapStateToProps>
-type DispatchProps = ReturnType<typeof mapDispatchToProps>
 
-type Props = StateProps & DispatchProps
-
-export default connect(mapStateToProps, mapDispatchToProps)(Title);
+export default connect(mapStateToProps)(Title);

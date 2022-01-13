@@ -2,21 +2,20 @@ import React, { MouseEventHandler } from 'react';
 import './Button.css';
 
 type ButtonProps = {
-    title: string,
+    title?: string,
     className: string,
-    onclick: Function
+    onclick: Function,
+    label?: string
 }
-
-
 
 function Button(props: ButtonProps) {
     const headingClickedHandler: MouseEventHandler = (
         event: React.MouseEvent<HTMLHeadingElement>
       ) => {
-        props.onclick();
+        props.onclick(event);
       };
     return (
-        <button title={props.title} className={props.className} onClick={headingClickedHandler}></button>
+        <button title={props.title} className={props.className} onClick={headingClickedHandler}>{props.label}</button>
     )
 }
 

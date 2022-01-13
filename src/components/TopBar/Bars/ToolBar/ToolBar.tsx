@@ -5,6 +5,11 @@ import Select from './Select/Select';
 import './ToolBar.css';
 import './Button/Button.css';
 import { showModal } from 'src/store/actionCreators/viewAction'
+import { addSlide } from 'src/store/actionCreators/editorAction'
+import { undo, redo } from 'src/store/actionCreators/historyAction'
+import { Identifier } from 'src/types';
+import { NOT_CHOICE_SLIDES, CONFIRM_DELETE_SLIDES, CONFIRM_CREATE_NEW_PRESENTATION, OPEN_PRESENTATION } from 'src/components/Modal/Modal'
+import { returnSlideButtonsToOriginalState } from 'src/helpers/commonHelper'
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -14,21 +19,83 @@ let fontBase = [
 ];
 
 let fontSizeBase = [
-  { value: '2'},
-  { value: '4'},
-  { value: '6'},
-  { value: '8'},
-  { value: '10'},
-  { value: '12'},
-  { value: '14'},
-  { value: '16'},
+  { value: '2' },
+  { value: '4' },
+  { value: '6' },
+  { value: '8' },
+  { value: '10' },
+  { value: '12' },
+  { value: '14' },
+  { value: '16' },
 ];
 
 function newPresentation() {
-  store.dispatch(showModal({
-    active: true,
-    type: 1,
-  }));
+  store.dispatch(showModal(CONFIRM_CREATE_NEW_PRESENTATION));
+}
+
+function openPresentation() {
+  store.dispatch(showModal(OPEN_PRESENTATION));
+  let fileDialog = document.querySelector('[name="modalFileDialog"]') as HTMLFormElement;
+  console.log(fileDialog);
+  if (fileDialog !== null) {
+    fileDialog.value = null;
+  }
+  
+}
+
+function savePresentation () {
+  const editor = store.getState().editor;
+  const fileName = `${editor.presentation.title}.json`;
+  const jsonEditor = JSON.stringify(editor, null, 2);
+  let linkFile = document.createElement("a");
+  let file = new Blob([jsonEditor], {type: "text/plain"});
+  linkFile.href = URL.createObjectURL(file);
+  linkFile.download = fileName;
+  document.body.appendChild(linkFile);
+  linkFile.click();
+  document.body.removeChild(linkFile);
+}
+
+function newSlide() {
+  store.dispatch(addSlide());
+}
+
+function undoAction() {
+  store.dispatch(undo());
+}
+
+function redoAction() {
+  store.dispatch(redo());
+}
+
+function markerSeveralSlides(event: React.MouseEvent<HTMLHeadingElement>) {
+  const target = event.target as HTMLButtonElement;
+  if (target.className === "btn btn_checklist") {
+    target.className = "btn btn_checklist btn_active";
+    document.getElementsByClassName("btn btn_add").item(0)?.setAttribute('disabled', 'true');
+    const slidesCheckboxes = document.querySelectorAll(".slide-miniature__checkbox");
+    for (let i = 0; i < slidesCheckboxes.length; i += 1) {
+      slidesCheckboxes[i].className = "slide-miniature__checkbox slide-miniature__checkbox_visible";
+    }
+  } else {
+    returnSlideButtonsToOriginalState();
+  }
+}
+
+function deleteSlides() {
+  const slidesIdentifires: Array<Identifier> = [];
+  const slidesCheckboxes = document.querySelectorAll(".slide-miniature__checkbox");
+  for (let i = 0; i < slidesCheckboxes.length; i += 1) {
+    const checkbox = slidesCheckboxes[i].firstElementChild as HTMLInputElement;
+    if (checkbox !== null && checkbox.checked) {
+      slidesIdentifires.push(checkbox.value);
+    }
+  }
+  if (slidesIdentifires.length > 0) {
+    store.dispatch(showModal(CONFIRM_DELETE_SLIDES));
+  } else {
+    store.dispatch(showModal(NOT_CHOICE_SLIDES));
+  }
 }
 
 const buttonsList = [
@@ -36,17 +103,17 @@ const buttonsList = [
     {
       title: "New presentation",
       className: "btn btn_newFile",
-      onclick: newPresentation  
+      onclick: newPresentation
     },
     {
       title: "Open project",
       className: "btn btn_openFile",
-      onclick: newPresentation
+      onclick: openPresentation
     },
     {
       title: "Save presentation",
       className: "btn btn_saveFile",
-      onclick: newPresentation
+      onclick: savePresentation
     },
     {
       title: "Export presentation",
@@ -54,31 +121,38 @@ const buttonsList = [
       onclick: newPresentation
     },
     {
-      title: "Start slideshow", 
+      title: "Start slideshow",
       className: "btn btn_play",
       onclick: newPresentation
     }
   ],
   [
     {
+      title: "Undo",
+      className: "btn btn_undo",
+      onclick: undoAction
+    },
+    {
+      title: "Redo",
+      className: "btn btn_redo",
+      onclick: redoAction
+    },
+  ],
+  [
+    {
       title: "Add slide",
       className: "btn btn_add",
-      onclick: newPresentation
+      onclick: newSlide
     },
     {
-      title: "Open project",
-      className: "btn btn_openFile",
-      onclick: newPresentation
+      title: "Mark several slides",
+      className: "btn btn_checklist",
+      onclick: markerSeveralSlides
     },
     {
-      title: "Save presentation",
-      className: "btn btn_saveFile",
-      onclick: newPresentation
-    },
-    {
-      title: "Export presentation",
-      className: "btn btn_export",
-      onclick: newPresentation
+      title: "Delete slides",
+      className: "btn btn_deleteSlide",
+      onclick: deleteSlides
     },
   ],
 ]
@@ -88,17 +162,9 @@ function ToolBar() {
   return (
     <div className="toolBarContainer">
       {buttonsList.map(
-        (btnGroup, btnGroupNumber) => 
+        (btnGroup, btnGroupNumber) =>
           <div className="itemGroupContainer" key={`btnGroup${btnGroupNumber}`} >{btnGroup.map((button, btnNumber) => <Button key={`btn${btnGroupNumber}${btnNumber}`} title={button.title} className={button.className} onclick={button.onclick} />)}</div>)}
       {/* 
-      <div className="itemGroupContainer">
-        <Button title="Copy" className="btn btn_copy" />
-        <Button title="Paste" className="btn btn_paste" />
-        <Button title="Undo" className="btn btn_undo" />
-        <Button title="Redo" className="btn btn_redo" />
-        <Button title="Select content" className="btn btn_select" />
-      </div>
-
       <div className="itemGroupContainer">
         <Button title="Text box" className="btn btn_text" />
         <Button title="Add image" className="btn btn_image" />

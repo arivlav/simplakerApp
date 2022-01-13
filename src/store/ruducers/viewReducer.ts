@@ -3,6 +3,7 @@ import { AnyAction } from "redux";
 
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const TURN_RIGHT_BAR = 'TURN_RIGHT_BAR';
 
 export const viewReducer = (view: View, action: AnyAction): View => {
     switch (action.type) {
@@ -12,7 +13,7 @@ export const viewReducer = (view: View, action: AnyAction): View => {
                 modal: {
                     ...view.modal,
                     active: true,
-                    type: action.modal.type,
+                    type: action.modal_type,
                 }
             }
         case CLOSE_MODAL:
@@ -23,6 +24,11 @@ export const viewReducer = (view: View, action: AnyAction): View => {
                     active: false
                 }
             }
+        case TURN_RIGHT_BAR:
+            return {
+                ...view,
+                rightBarContent: action.rightBarContent,                    
+            }        
         default:
             return view
     }

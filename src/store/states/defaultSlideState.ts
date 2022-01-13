@@ -5,7 +5,7 @@ export const defaultSlide: Slide  = {
     id: generateIdentifier(),
     background: {
         value: "backgroundColor",
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff", 
     },
     contentList: [],
 } 

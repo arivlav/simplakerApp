@@ -6,10 +6,24 @@ import Header from 'src/components/Header/Header';
 import RightBarContainer from 'src/components/RightBarContainer/RightBarContainer';
 import Footer from 'src/components/Footer/Footer';
 import Modal from 'src/components/Modal/Modal';
+import { store } from './store/store';
+import { redo, undo } from './store/actionCreators/historyAction';
 
 function App () {
+  function handleKeyPress(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.ctrlKey) {
+      switch (event.key) {
+        case 'z':
+          store.dispatch(undo());
+          break;
+        case 'y':
+          store.dispatch(redo());
+
+      } 
+    }
+  }
   return (
-      <div className="Editor">
+      <div className="Editor" onKeyDown={(event) => handleKeyPress(event)}>
         <Header />
         <TopBar />
         <FilmstripContainer />

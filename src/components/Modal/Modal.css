@@ -23,14 +23,20 @@
     border-radius: 10px;
     background-color: #fff;
     max-height: 50%;
-    width: 40%;
+    width: 30%;
     transform: scale(0.5);
     transition: 0.3s all;
     color: #8f8f8f;
+    margin: 0 0 20vh 0;
 }
 
 .modal__content.active {
     transform: scale(1);
+}
+
+.header__title {
+    float: left;
+    margin: 0;
 }
 
 .header__closeBtn {
@@ -45,6 +51,11 @@
     outline:none;
 }
 
+.content__body {
+    text-align: left;
+    padding: 0 5px 0 5px;
+}
+
 .clear {
     width: 100%;
     clear: both;
@@ -54,4 +65,49 @@
     height: 0;
 	border: none;
 	border-top: 1px solid #8f8f8f;
+}
+
+.footer__alignOneButton {
+    text-align: center;
+}
+
+.footer__alignTwoButton {
+    text-align: right;
+}
+
+.footer__btn {
+    font-weight: 600;
+    color: black;
+    padding: .8em 1em calc(.8em + 3px);
+    border-radius: 7px;
+    transition: 0.2s;
+    min-width: 70px;
+    margin: 0 5px;   
+}
+
+.footer__btn_ok {
+    background: #00808075;
+}
+.footer__btn_ok:hover { 
+    background: #008080fa; 
+}
+.footer__btn_ok:active {
+    background: #008080fa;
+}
+
+.footer__btn_cancel {
+    background: #E2E2E2;
+}
+
+.footer__btn_cancel:hover { 
+    background: #e2e2e29a; 
+}
+
+.footer__btn_cancel:active {
+    background: #e2e2e2c5;
+}
+
+.documentError {
+    color: #f55f4c;
+    font-size: 14px;
 }

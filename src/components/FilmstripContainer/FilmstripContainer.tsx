@@ -1,22 +1,40 @@
-import './FilmstripContainer.css';
-import 'src/components/Slide/Slide.css';
-import Slide from 'src/components/Slide/Slide';
+import './FilmstripContainer.css'
+import 'src/components/Slide/Slide.css'
+import Slide from 'src/components/Slide/Slide'
+import { connect } from 'react-redux'
+import { RootState } from 'src/store/store'
+import { changeTitle } from 'src/store/actionCreators/editorAction'
 
-function FilmstripContainer() {
+function FilmstripContainer(props: Props) {
     return (
-      <div className="FilmstripContainer">      
-        <Slide className="slide_miniature" text="Slide 1"/>
-        <Slide className="slide_miniature" text="Slide 2"/>
-        <Slide className="slide_miniature" text="Slide 3"/>
-        <Slide className="slide_miniature" text="Slide 5"/>
-        <Slide className="slide_miniature" text="Slide 6"/>
-        <Slide className="slide_miniature" text="Slide 7"/>
+      <div className="FilmstripContainer">
+        {props.slideList.map(
+          (slide, index) => <Slide 
+            key={`slide-${slide.id}`} 
+            className={(props.activeSlide == slide.id) ? "slide-miniature-inner slide-miniature_active" : "slide-miniature-inner"} 
+            text={`Slide ${index+1}`} 
+            slide={slide}/>
+        )}
       </div>
     );
-  }
-  
-  export default FilmstripContainer;
+  } 
 
-  // editor.slidelist.forEach(function (value) {
-  //   <Slide width={props.blabla}/>
-  // });
+function mapStateToProps(state: RootState) {
+  return {
+    slideList: state.editor.presentation.slideList,
+    activeSlide: state.editor.presentation.activeSlide
+  }
+}
+  
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
+  }
+}
+  
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
+
+type Props = StateProps & DispatchProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmstripContainer);

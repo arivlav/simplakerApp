@@ -6,7 +6,7 @@ function WorkspaceContainer() {
   return (
     <div className="WorkspaceContainer">
       <div className="WorkspaceContainer__inner">
-        <Slide className="slide" text="Hello" /> 
+        {/* <Slide className="slide" text="Hello" slide={} />  */}
       </div>    
     </div>
   );

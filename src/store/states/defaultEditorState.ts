@@ -7,12 +7,7 @@ export const defaultEditor: Editor = {
         title: 'New present',
         slideList: [
             defaultSlide          
-        ]
+        ],
+        activeSlide: defaultSlide.id,
     },
-    chronicle: {
-        undo: [],
-        redo: []
-    },
-    selectedSlides: [],
-    // palette:  
 }

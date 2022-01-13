@@ -10,7 +10,16 @@
   background: #e7e7e7;
 }
 
+.btn:disabled {
+  background-color: #cccccc;
+  cursor:not-allowed !important;
+}
+
 .btn:active {
+  background: #6aabff;
+}
+
+.btn_active {
   background: #6aabff;
 }
 
@@ -164,4 +173,14 @@
 .btn_saveFile::before {
   background: transparent;
   content: url(/src/images/icons/rounded/save_file.svg);
+}
+
+.btn_checklist::before {
+  background: transparent;
+  content: url(/src/images/icons/rounded/checklist.svg);
+}
+
+.btn_deleteSlide::before {
+  background: transparent;
+  content: url(/src/images/icons/rounded/remove_circle.svg);
 }

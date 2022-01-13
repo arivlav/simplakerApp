@@ -1,22 +1,11 @@
 type Editor = {
-    readonly mode: Mode;   //Вынести в тип. Done
-    readonly chronicle: Chronicle;
-    // readonly palette: Palette;
-    //если в селектид слайд один слайд, то он работает, как текущий, и можно выбирать контент
-    //если выбрано более одного слайда, то выбор контента слетает.
-
-    readonly selectedSlides: Array<Identifier>;  //сюда записываются выбранные несколько слайдов
+    readonly mode: Mode;
     readonly presentation: Presentation;
-}
-
-type Chronicle = {
-    undo: Array<Editor>;
-    redo: Array<Editor>;
 }
 
 type Mode = "view" | "edit";
 
-type Identifier = String; //А почему не сразу стринг там, где нужен id? Тут особая какая то строка будет. Все строки по какому-то шаблону 
+type Identifier = string; //А почему не сразу стринг там, где нужен id? Тут особая какая то строка будет. Все строки по какому-то шаблону 
 
 // type Palette = {
 //     readonly currentColor: string;
@@ -25,6 +14,7 @@ type Identifier = String; //А почему не сразу стринг там,
 
 type Presentation = {
     title: string;
+    activeSlide: Identifier;
     slideList: Array<Slide>;
 }
 
@@ -92,7 +82,6 @@ type FontStyle = "italic" | "bold" | "underline";
 
 export type {
     Editor,
-    Chronicle,
     Mode,
     Identifier,
     // Palette,
