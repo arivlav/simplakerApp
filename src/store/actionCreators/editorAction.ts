@@ -1,6 +1,18 @@
 import { AnyAction } from 'redux';
 import { Editor, Identifier, Mode } from 'src/types';
-import { CHANGE_TITLE, ADD_SLIDE, DELETE_SLIDES, CHANGE_STATE_EDITOR, NEW_PRESENTATION, OPEN_PRESENTATION, ACTIVE_SLIDE } from 'src/store/ruducers/editorReducer'
+import { 
+    CHANGE_TITLE, 
+    ADD_SLIDE, 
+    DELETE_SLIDES, 
+    CHANGE_STATE_EDITOR, 
+    NEW_PRESENTATION, 
+    OPEN_PRESENTATION, 
+    ACTIVE_SLIDE,
+    SELECTED_SLIDES_ADD, 
+    SELECTED_SLIDES_DELETE, 
+    SELECTED_SLIDES_OFF, 
+    SELECTED_SLIDES_ON, 
+} from 'src/store/ruducers/editorReducer'
 
 export function changeStateEditor(editor: Editor) {
     return {
@@ -42,9 +54,34 @@ export function makeActiveSlide(slide: Identifier): AnyAction {
     }
 }
 
-export function deleteSlides(slides: Array<Identifier>): AnyAction {
+export function deleteSlides(): AnyAction {
     return {
         type: DELETE_SLIDES,
-        slides: slides,
+    }
+}
+
+export function selectedSlidesOn(): AnyAction {
+    return {
+        type: SELECTED_SLIDES_ON,
+    }
+}
+
+export function selectedSlidesOff(): AnyAction {
+    return {
+        type: SELECTED_SLIDES_OFF,
+    }
+}
+
+export function selectedSlidesAdd(slidesIdentifier: Identifier): AnyAction {
+    return {
+        type: SELECTED_SLIDES_ADD,
+        slidesIdentifier: slidesIdentifier,
+    }
+}
+
+export function selectedSlidesDelete(slidesIdentifier: Identifier): AnyAction {
+    return {
+        type: SELECTED_SLIDES_DELETE,
+        slidesIdentifier: slidesIdentifier,
     }
 }

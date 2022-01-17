@@ -16,6 +16,10 @@ type Presentation = {
     title: string;
     activeSlide: Identifier;
     slideList: Array<Slide>;
+    selectedSlides: {
+        selectedMode: boolean,    
+        selectedSlides: Array<Identifier>,
+    }
 }
 
 type Slide = {

@@ -1,10 +1,11 @@
-import { createStore, Store, applyMiddleware, Middleware, MiddlewareAPI, Dispatch, Action } from 'redux'
+import { createStore, Store, applyMiddleware, Middleware } from 'redux'
 import { rootReducer } from 'src/store/ruducers/rootReducer'
-import { Editor } from "src/types"
+import { Editor, Identifier } from "src/types"
 import { defaultEditor } from "src/store/states/defaultEditorState"
 import { ModalStateType } from 'src/components/Modal/Modal'
 import { addToHistory } from 'src/store/actionCreators/historyAction'
 import { UNDO, REDO, ADD_TO_HISTORY } from 'src/store/ruducers/historyReducer'
+import { TURN_RIGHT_BAR } from './ruducers/viewReducer'
 
 export type View = {
     modal: ModalStateType,

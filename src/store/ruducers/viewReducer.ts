@@ -1,5 +1,6 @@
 import { View } from "src/store/store";
 import { AnyAction } from "redux";
+import { Identifier } from "src/types";
 
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
@@ -28,7 +29,7 @@ export const viewReducer = (view: View, action: AnyAction): View => {
             return {
                 ...view,
                 rightBarContent: action.rightBarContent,                    
-            }        
+            }                      
         default:
             return view
     }

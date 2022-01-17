@@ -1,7 +1,10 @@
 import { AnyAction } from 'redux'
-import { SHOW_MODAL, CLOSE_MODAL, TURN_RIGHT_BAR } from 'src/store/ruducers/viewReducer'
-import { ModalStateType } from 'src/components/Modal/Modal'
-import { PRESENTATION_TITLE_FORM } from 'src/components/RightBarContainer/RightBarContainer'
+import { 
+    SHOW_MODAL, 
+    CLOSE_MODAL, 
+    TURN_RIGHT_BAR,
+} from 'src/store/ruducers/viewReducer'
+import { Identifier } from 'src/types'
 
 export function showModal(modal_type: Number): AnyAction {
     return {

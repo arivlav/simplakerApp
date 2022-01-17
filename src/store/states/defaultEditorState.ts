@@ -9,5 +9,9 @@ export const defaultEditor: Editor = {
             defaultSlide          
         ],
         activeSlide: defaultSlide.id,
+        selectedSlides: {
+            selectedMode: false,
+            selectedSlides: [],
+        }
     },
 }

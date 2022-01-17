@@ -9,7 +9,6 @@ import { clearHistory } from 'src/store/actionCreators/historyAction'
 import SingleFooterButton from 'src/components/Modal/ModalElements/Buttons/SingleFooterButton'
 import TwoFooterButton from 'src/components/Modal/ModalElements/Buttons/TwoFooterButton'
 import { Editor, Identifier } from 'src/types'
-import { returnSlideButtonsToOriginalState } from 'src/helpers/commonHelper'
 
 export type ModalStateType = {
     active: Boolean,
@@ -64,8 +63,7 @@ function openProject() {
 }
 
 function deleteSlidesConfirm() {
-    let slides: Array<Identifier> = returnSlideButtonsToOriginalState();
-    store.dispatch(deleteSlides(slides));
+    store.dispatch(deleteSlides());
     store.dispatch(closeModal());
 }
 

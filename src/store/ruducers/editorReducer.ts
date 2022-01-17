@@ -14,6 +14,11 @@ export const TOGGLE_PRESENTATION_MODE = 'TOGGLE_PRESENTATION_MODE';
 export const ADD_SLIDE = 'ADD_SLIDE';
 export const DELETE_SLIDES = 'DELETE_SLIDES';
 export const ACTIVE_SLIDE = 'ACTIVE_SLIDE';
+export const SELECTED_SLIDES_ADD = 'SELECTED_SLIDES_ADD';
+export const SELECTED_SLIDES_DELETE = 'SELECTED_SLIDES_DELETE';
+export const SELECTED_SLIDES_ON = 'SELECTED_SLIDES_ON';
+export const SELECTED_SLIDES_OFF = 'SELECTED_SLIDES_OFF';
+
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
     switch (action.type) {
@@ -31,7 +36,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 mode: action.mode
             }
         case CHANGE_STATE_EDITOR:
-            return action.editor;    
+            return action.editor;
         case CHANGE_TITLE:
             return {
                 ...editor,
@@ -60,14 +65,14 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 ...editor,
                 presentation: {
                     ...editor.presentation,
-                    activeSlide: action.slide,    
+                    activeSlide: action.slide,
                 }
-            }    
+            }
         case DELETE_SLIDES:
             let newSlideList: Array<Slide> = [];
             let deleteSlides: Array<Identifier> = action.slides;
             let currentSlideList = [...editor.presentation.slideList];
-            for (let i = 0; i < currentSlideList.length; i +=1) {
+            for (let i = 0; i < currentSlideList.length; i += 1) {
                 let result = deleteSlides.find((id) => id === currentSlideList[i].id);
                 if (result === undefined) {
                     newSlideList.push(currentSlideList[i]);
@@ -78,6 +83,63 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 presentation: {
                     ...editor.presentation,
                     slideList: newSlideList,
+                }
+            }
+        case SELECTED_SLIDES_ON:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    selectedSlides: {
+                        ...editor.presentation.selectedSlides,
+                        selectedMode: true,
+                    }
+                }
+            }
+        case SELECTED_SLIDES_OFF:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    selectedSlides: {
+                        ...editor.presentation.selectedSlides,
+                        selectedMode: false,
+                        selectedSlides: [],
+                    }
+                }
+            }
+        case SELECTED_SLIDES_ADD:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    selectedSlides: {
+                        ...editor.presentation.selectedSlides,
+                        selectedSlides: [
+                            ...editor.presentation.selectedSlides.selectedSlides,
+                            action.slidesIdentifier,
+                        ],
+                    }
+                }
+            }
+        case SELECTED_SLIDES_DELETE:
+            let selectedSlides: Array<Identifier> = [];
+            let currentSelectedSlides = [...editor.presentation.selectedSlides.selectedSlides]
+            if (currentSelectedSlides.length > 0) {
+                currentSelectedSlides.forEach((identifier, index) => {
+                    if (identifier === action.slidesIdentifier) {
+                        selectedSlides.push(currentSelectedSlides[index]);
+                    }
+                });
+            }
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    selectedSlides: {
+                        ...editor.presentation.selectedSlides,
+                        selectedSlides: selectedSlides,
+                    }
                 }
             }
         default:

@@ -5,11 +5,10 @@ import Select from './Select/Select';
 import './ToolBar.css';
 import './Button/Button.css';
 import { showModal } from 'src/store/actionCreators/viewAction'
-import { addSlide } from 'src/store/actionCreators/editorAction'
+import { selectedSlidesOff, selectedSlidesOn, addSlide } from 'src/store/actionCreators/editorAction'
 import { undo, redo } from 'src/store/actionCreators/historyAction'
 import { Identifier } from 'src/types';
 import { NOT_CHOICE_SLIDES, CONFIRM_DELETE_SLIDES, CONFIRM_CREATE_NEW_PRESENTATION, OPEN_PRESENTATION } from 'src/components/Modal/Modal'
-import { returnSlideButtonsToOriginalState } from 'src/helpers/commonHelper'
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -70,28 +69,21 @@ function redoAction() {
 
 function markerSeveralSlides(event: React.MouseEvent<HTMLHeadingElement>) {
   const target = event.target as HTMLButtonElement;
-  if (target.className === "btn btn_checklist") {
+  let switcher: boolean = !store.getState().editor.presentation.selectedSlides.selectedMode;
+  if (switcher) {
     target.className = "btn btn_checklist btn_active";
     document.getElementsByClassName("btn btn_add").item(0)?.setAttribute('disabled', 'true');
-    const slidesCheckboxes = document.querySelectorAll(".slide-miniature__checkbox");
-    for (let i = 0; i < slidesCheckboxes.length; i += 1) {
-      slidesCheckboxes[i].className = "slide-miniature__checkbox slide-miniature__checkbox_visible";
-    }
+    store.dispatch(selectedSlidesOn());
   } else {
-    returnSlideButtonsToOriginalState();
+    target.className = "btn btn_checklist";
+    document.getElementsByClassName("btn btn_add").item(0)?.removeAttribute('disabled');
+    store.dispatch(selectedSlidesOff());
   }
 }
 
 function deleteSlides() {
-  const slidesIdentifires: Array<Identifier> = [];
-  const slidesCheckboxes = document.querySelectorAll(".slide-miniature__checkbox");
-  for (let i = 0; i < slidesCheckboxes.length; i += 1) {
-    const checkbox = slidesCheckboxes[i].firstElementChild as HTMLInputElement;
-    if (checkbox !== null && checkbox.checked) {
-      slidesIdentifires.push(checkbox.value);
-    }
-  }
-  if (slidesIdentifires.length > 0) {
+  const slides = store.getState().editor.presentation.selectedSlides;
+  if (slides.selectedMode && slides.selectedSlides.length > 0) {
     store.dispatch(showModal(CONFIRM_DELETE_SLIDES));
   } else {
     store.dispatch(showModal(NOT_CHOICE_SLIDES));
