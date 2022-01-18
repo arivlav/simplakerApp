@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { RootState, store } from 'src/store/store'
 import { showModal, closeModal, turnRightBar } from 'src/store/actionCreators/viewAction'
 import { EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
-import { newPresentation, deleteSlides, openPresentation } from 'src/store/actionCreators/editorAction'
+import { newPresentation, deleteSlides, openPresentation, deleteSlide } from 'src/store/actionCreators/editorAction'
 import { clearHistory } from 'src/store/actionCreators/historyAction'
 import SingleFooterButton from 'src/components/Modal/ModalElements/Buttons/SingleFooterButton'
 import TwoFooterButton from 'src/components/Modal/ModalElements/Buttons/TwoFooterButton'
@@ -29,6 +29,7 @@ export const EXPORT_PRESENTATION = 4;
 export const PREVIEW_PRESENTATION = 5
 export const NOT_CHOICE_SLIDES = 6;
 export const CONFIRM_DELETE_SLIDES = 7;
+export const CONFIRM_DELETE_SLIDE = 8;
 
 function createNewPresentation() {
     store.dispatch(newPresentation());
@@ -47,7 +48,7 @@ function openProject() {
         documentError.textContent = "";
         let reader = new FileReader();
         reader.readAsText(fileDialog.files[0]);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             const result = e.target?.result as string;
             const resultJson = JSON.parse(result);
             let newEditor: Editor = {
@@ -57,13 +58,18 @@ function openProject() {
             store.dispatch(openPresentation(newEditor));
             store.dispatch(clearHistory());
             store.dispatch(turnRightBar(EMPTY_RIGHT_BAR));
-            store.dispatch(closeModal());          
+            store.dispatch(closeModal());
         };
     }
 }
 
 function deleteSlidesConfirm() {
     store.dispatch(deleteSlides());
+    store.dispatch(closeModal());
+}
+
+function deleteSlideConfirm() {
+    store.dispatch(deleteSlide());
     store.dispatch(closeModal());
 }
 
@@ -106,8 +112,15 @@ function renderModalInner(typeModal: Number): ModalInner {
         case CONFIRM_DELETE_SLIDES:
             modalInner = {
                 header: 'Confirmation',
-                body: `<p>Do you really want to delete the selected slides?</p>`,
+                body: `<p>Do you really want to delete selected slides?</p>`,
                 footer: <TwoFooterButton title="Confirm" onclick={deleteSlidesConfirm} />,
+            }
+            break;
+        case CONFIRM_DELETE_SLIDE:
+            modalInner = {
+                header: 'Confirmation',
+                body: `<p>Do you really want to delete the active slide?</p>`,
+                footer: <TwoFooterButton title="Confirm" onclick={deleteSlideConfirm} />,
             }
     }
     return modalInner;

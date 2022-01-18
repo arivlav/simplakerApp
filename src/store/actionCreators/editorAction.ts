@@ -4,6 +4,7 @@ import {
     CHANGE_TITLE, 
     ADD_SLIDE, 
     DELETE_SLIDES, 
+    DELETE_SLIDE, 
     CHANGE_STATE_EDITOR, 
     NEW_PRESENTATION, 
     OPEN_PRESENTATION, 
@@ -47,16 +48,22 @@ export function addSlide(): AnyAction {
     }
 }
 
-export function makeActiveSlide(slide: Identifier): AnyAction {
+export function makeActiveSlide(slideId: Identifier): AnyAction {
     return {
         type: ACTIVE_SLIDE,
-        activeSlide: slide,
+        activeSlide: slideId,
     }
 }
 
 export function deleteSlides(): AnyAction {
     return {
         type: DELETE_SLIDES,
+    }
+}
+
+export function deleteSlide(): AnyAction {
+    return {
+        type: DELETE_SLIDE,
     }
 }
 

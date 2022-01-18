@@ -20,12 +20,11 @@ function Slide(props: Props) {
     } else {
       props.selectedSlidesDelete(identifier);
     }
-    console.log(props.selectedSlides);
   }
 
   function isCheckedCheckbox(identifier: Identifier): boolean
   {
-    const result = props.selectedSlides.find((id: Identifier) => id === identifier);
+    const result = props.selectedSlides.selectedSlides.find((id: Identifier) => id === identifier);
     if (result !== undefined) {
       return true;
     }
@@ -59,14 +58,16 @@ function Slide(props: Props) {
   return (
     <div 
       className="slide-miniature"
-      //onClick={bla(props.slide.id)} 
+      onClick={bla} 
       draggable={true}
       onDragStart={(e) => dragStartHandler(e, props.slide)}
       onDragLeave={(e) => dragEndHandler(e)}
       onDragOver={(e) => dragOverHandler(e)}
       onDragEnd={(e) => dragEndHandler(e)}
       onDrop={(e) => dropHandler(e, props.slide)}>
-      <div className={(!props.visibleModeCheckbox) ? "slide-miniature__checkbox" : "slide-miniature__checkbox slide-miniature__checkbox_visible"}><input type="checkbox" defaultValue={props.slide.id} onChange={(e) => toggleCheckbox(e)} defaultChecked={isCheckedCheckbox(props.slide.id)}  /></div>
+      <div className={(!props.selectedSlides.selectedMode) ? "slide-miniature__checkbox" : "slide-miniature__checkbox slide-miniature__checkbox_visible"}>
+        <input type="checkbox" defaultValue={props.slide.id} checked={isCheckedCheckbox(props.slide.id)} onChange={(e) => toggleCheckbox(e)}   />
+      </div>
       <div className={props.className}>
         <div className="slide__inner slide__inner-ratio">
           <div className="slide__content" style={slideBack}>           
@@ -80,8 +81,7 @@ function Slide(props: Props) {
 function mapStateToProps(state: RootState) {
   return {
     activeSlide: state.editor.presentation.activeSlide,
-    selectedSlides: state.editor.presentation.selectedSlides.selectedSlides,
-    visibleModeCheckbox: state.editor.presentation.selectedSlides.selectedMode,
+    selectedSlides: state.editor.presentation.selectedSlides,
   }
 }
   

@@ -7,8 +7,13 @@ import './Button/Button.css';
 import { showModal } from 'src/store/actionCreators/viewAction'
 import { selectedSlidesOff, selectedSlidesOn, addSlide } from 'src/store/actionCreators/editorAction'
 import { undo, redo } from 'src/store/actionCreators/historyAction'
-import { Identifier } from 'src/types';
-import { NOT_CHOICE_SLIDES, CONFIRM_DELETE_SLIDES, CONFIRM_CREATE_NEW_PRESENTATION, OPEN_PRESENTATION } from 'src/components/Modal/Modal'
+import { 
+  NOT_CHOICE_SLIDES, 
+  CONFIRM_DELETE_SLIDES, 
+  CONFIRM_DELETE_SLIDE, 
+  CONFIRM_CREATE_NEW_PRESENTATION, 
+  OPEN_PRESENTATION 
+} from 'src/components/Modal/Modal'
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -85,6 +90,9 @@ function deleteSlides() {
   const slides = store.getState().editor.presentation.selectedSlides;
   if (slides.selectedMode && slides.selectedSlides.length > 0) {
     store.dispatch(showModal(CONFIRM_DELETE_SLIDES));
+  } else if (!slides.selectedMode) {
+    
+    store.dispatch(showModal(CONFIRM_DELETE_SLIDE));
   } else {
     store.dispatch(showModal(NOT_CHOICE_SLIDES));
   }
