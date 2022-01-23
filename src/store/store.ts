@@ -1,15 +1,19 @@
 import { createStore, Store, applyMiddleware, Middleware } from 'redux'
 import { rootReducer } from 'src/store/ruducers/rootReducer'
-import { Editor, Identifier } from "src/types"
+import { Editor } from "src/types"
 import { defaultEditor } from "src/store/states/defaultEditorState"
 import { ModalStateType } from 'src/components/Modal/Modal'
 import { addToHistory } from 'src/store/actionCreators/historyAction'
 import { UNDO, REDO, ADD_TO_HISTORY } from 'src/store/ruducers/historyReducer'
-import { TURN_RIGHT_BAR } from './ruducers/viewReducer'
 
 export type View = {
     modal: ModalStateType,
     rightBarContent: Number,
+    defaultSettings: {
+        slideColor: string,
+        primitiveStrokeColor: string,
+        primitiveFillColor: string,
+    }
 }
 
 export type History = {
@@ -30,7 +34,12 @@ export const defaultState: RootState = {
             active: false,
             type: 1,
         },
-        rightBarContent: 0,
+        rightBarContent: 1,
+        defaultSettings: {
+            slideColor: '#ffffff',
+            primitiveStrokeColor: '#0f0f00',
+            primitiveFillColor: '#ffffff',
+        }
     },
     history: {
         undo: [defaultEditor],

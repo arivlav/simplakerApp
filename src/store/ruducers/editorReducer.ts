@@ -1,8 +1,9 @@
-import { Editor, Identifier, Slide } from "src/types";
+import { Content, Editor, Identifier, Slide } from "src/types";
 import { defaultEditor } from "src/store/states/defaultEditorState"
 import { defaultSlide } from "src/store/states/defaultSlideState"
 import { AnyAction } from "redux"
 import { generateIdentifier } from 'src/helpers/editorHelper';
+import { defaultContent } from "../states/defaultContentState";
 
 export const CHANGE_STATE_EDITOR = 'CHANGE_STATE_EDITOR';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
@@ -19,12 +20,14 @@ export const SELECTED_SLIDES_ADD = 'SELECTED_SLIDES_ADD';
 export const SELECTED_SLIDES_DELETE = 'SELECTED_SLIDES_DELETE';
 export const SELECTED_SLIDES_ON = 'SELECTED_SLIDES_ON';
 export const SELECTED_SLIDES_OFF = 'SELECTED_SLIDES_OFF';
+export const CHANGE_BACKGROUND_SLIDE = 'CHANGE_BACKGROUND_SLIDE';
+export const ADD_CONTENT = 'ADD_CONTENT';
+export const DELETE_CONTENT = 'DELETE_CONTENT';
 
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
     let newSlideList: Array<Slide> = [];
-    let currentSlideList = [...editor.presentation.slideList];
-    let newActiveSlide: Identifier = ""; 
+    let newActiveSlide: Identifier = "";
     switch (action.type) {
         case 'NEW_PRESENTATION':
             return defaultEditor
@@ -62,6 +65,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                             id: newActiveSlide,
                             contentList: defaultSlide.contentList,
                             background: defaultSlide.background,
+                            activeContent: defaultSlide.activeContent,
                         },
                     ]
                 }
@@ -75,17 +79,9 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 }
             }
         case DELETE_SLIDES:
-            let deleteSlides: Array<Identifier> = [...editor.presentation.selectedSlides.selectedSlides];
-            let isNotDelActiveSlide: boolean = false;
-            currentSlideList.forEach((identifier, index) => {
-                let result = deleteSlides.find((id) => id === currentSlideList[index].id);
-                if (result === undefined) {
-                    isNotDelActiveSlide = currentSlideList[index].id === editor.presentation.activeSlide;
-                    newSlideList.push(currentSlideList[index]);
-                };
-            });
+            newSlideList = editor.presentation.slideList.filter((slide) => editor.presentation.selectedSlides.selectedSlides.find((identifier) => identifier === slide.id) === undefined);
             if (newSlideList.length > 0) {
-                newActiveSlide = (isNotDelActiveSlide) ? editor.presentation.activeSlide : newSlideList[0].id 
+                newActiveSlide = (newSlideList.find((slide) => slide.id === editor.presentation.activeSlide) === undefined) ?  newSlideList[0].id : editor.presentation.activeSlide;
             }
             return {
                 ...editor,
@@ -96,18 +92,33 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 }
             }
         case DELETE_SLIDE:
-            let deleteSlide: Identifier = editor.presentation.activeSlide;
-            currentSlideList.forEach((identifier, index) => {
-                if (deleteSlide !== currentSlideList[index].id) {
-                    newSlideList.push(currentSlideList[index]);
-                };
-            });
+            newSlideList = editor.presentation.slideList.filter((slide) => slide.id !== editor.presentation.activeSlide);
             return {
                 ...editor,
                 presentation: {
                     ...editor.presentation,
                     slideList: newSlideList,
                     activeSlide: (newSlideList.length > 0) ? newSlideList[0].id : "",
+                }
+            }
+        case CHANGE_BACKGROUND_SLIDE:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide: Slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            background: {
+                                ...slide.background,
+                                type: action.background.type,
+                                value: action.background.value,
+                            }
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
                 }
             }
         case SELECTED_SLIDES_ON:
@@ -148,23 +159,46 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 }
             }
         case SELECTED_SLIDES_DELETE:
-            let selectedSlides: Array<Identifier> = [];
-            let currentSelectedSlides = [...editor.presentation.selectedSlides.selectedSlides]
-            if (currentSelectedSlides.length > 0) {
-                currentSelectedSlides.forEach((identifier, index) => {
-                    if (identifier !== action.slidesIdentifier) {
-                        selectedSlides.push(currentSelectedSlides[index]);
-                    }
-                });
-            }
             return {
                 ...editor,
                 presentation: {
                     ...editor.presentation,
                     selectedSlides: {
                         ...editor.presentation.selectedSlides,
-                        selectedSlides: selectedSlides,
+                        selectedSlides: editor.presentation.selectedSlides.selectedSlides.filter((identifier) =>identifier !== action.slidesIdentifier),
                     }
+                }
+            }
+        case ADD_CONTENT:
+            const contentId = generateIdentifier();
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide, 
+                            contentList: [
+                                ...slide.contentList,
+                                {
+                                    id: contentId,
+                                    height: defaultContent.height,
+                                    width: defaultContent.width,
+                                    name: action.contentType,
+                                    coordinates: defaultContent.coordinates,
+                                    type: {
+                                        ...defaultContent.type,
+                                        imageUrl: (action.contentType !== null) ? action.imageUrl : defaultContent.type.imageUrl, 
+                                    },
+                                    zIndex: slide.contentList.length,
+                                }
+                            ],
+                            activeContent: contentId,
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
                 }
             }
         default:

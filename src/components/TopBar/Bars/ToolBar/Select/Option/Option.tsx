@@ -1,7 +1,7 @@
 import React from 'react';
 
 type OptionProps = {    
-    value: string
+    value: string,
   }
   
   function Option(props: OptionProps)

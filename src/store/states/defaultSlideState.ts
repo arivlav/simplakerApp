@@ -4,8 +4,9 @@ import { generateIdentifier } from "src/helpers/editorHelper"
 export const defaultSlide: Slide  = {
     id: generateIdentifier(),
     background: {
-        value: "backgroundColor",
-        backgroundColor: "#ffffff", 
+        type: "color",
+        value: "#ffffff", 
     },
     contentList: [],
+    activeContent: '',
 } 

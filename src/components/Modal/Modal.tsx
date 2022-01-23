@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Modal.css'
 import { connect } from 'react-redux'
 import { RootState, store } from 'src/store/store'
 import { showModal, closeModal, turnRightBar } from 'src/store/actionCreators/viewAction'
-import { EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
-import { newPresentation, deleteSlides, openPresentation, deleteSlide } from 'src/store/actionCreators/editorAction'
+import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
+import { newPresentation, deleteSlides, openPresentation, deleteSlide, addContent } from 'src/store/actionCreators/editorAction'
 import { clearHistory } from 'src/store/actionCreators/historyAction'
 import SingleFooterButton from 'src/components/Modal/ModalElements/Buttons/SingleFooterButton'
 import TwoFooterButton from 'src/components/Modal/ModalElements/Buttons/TwoFooterButton'
-import { Editor, Identifier } from 'src/types'
+import { Editor } from 'src/types'
 
 export type ModalStateType = {
     active: Boolean,
@@ -30,19 +30,19 @@ export const PREVIEW_PRESENTATION = 5
 export const NOT_CHOICE_SLIDES = 6;
 export const CONFIRM_DELETE_SLIDES = 7;
 export const CONFIRM_DELETE_SLIDE = 8;
+export const ADD_IMAGE = 9;
 
 function createNewPresentation() {
     store.dispatch(newPresentation());
     store.dispatch(clearHistory());
     store.dispatch(closeModal());
-    console.log(store.getState());
 }
 
 function openProject() {
     const modal = document.getElementsByClassName("modal")[0];
     const fileDialog = modal.querySelector('[name="fileDialog"]') as HTMLFormElement;
     let documentError = modal.getElementsByClassName("documentError")[0] as HTMLElement;
-    if (fileDialog.files[0] == undefined || fileDialog.files[0].type !== "application/json") {
+    if (fileDialog.files[0] === undefined || fileDialog.files[0].type !== "application/json") {
         documentError.textContent = "Select file *.json";
     } else {
         documentError.textContent = "";
@@ -66,11 +66,26 @@ function openProject() {
 function deleteSlidesConfirm() {
     store.dispatch(deleteSlides());
     store.dispatch(closeModal());
+    store.dispatch(turnRightBar(ACTIVE_SLIDE_FORM));
 }
 
 function deleteSlideConfirm() {
     store.dispatch(deleteSlide());
     store.dispatch(closeModal());
+    store.dispatch(turnRightBar(ACTIVE_SLIDE_FORM));
+}
+
+function addImage() {
+    const modal = document.getElementsByClassName("modal")[0];
+    const fileDialog = modal.querySelector('[name="fileImageDialog"]') as HTMLFormElement;
+    if (fileDialog.files[0] !== undefined) {
+        let reader = new FileReader();
+        reader.readAsDataURL(fileDialog.files[0]);
+        reader.onload = function (e) {
+            store.dispatch(addContent("image", e.target?.result as string));
+        };
+        store.dispatch(closeModal());
+    }
 }
 
 function renderModalInner(typeModal: Number): ModalInner {
@@ -121,6 +136,13 @@ function renderModalInner(typeModal: Number): ModalInner {
                 header: 'Confirmation',
                 body: `<p>Do you really want to delete the active slide?</p>`,
                 footer: <TwoFooterButton title="Confirm" onclick={deleteSlideConfirm} />,
+            };
+            break;
+        case ADD_IMAGE:
+            modalInner = {
+                header: 'Confirmation',
+                body: `<p>Add image: <input type="file" name="fileImageDialog"></p>`,
+                footer: <TwoFooterButton title="Confirm" onclick={addImage} />,
             }
     }
     return modalInner;

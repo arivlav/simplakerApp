@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import ColorPicker from './ColorPicker/ColorPicker';
 import PresentationTitle from 'src/components/RightBarContainer/forms/PresentationTitle/PresentationTitle';
+import ActiveSlideSettings from 'src/components/RightBarContainer/forms/ActiveSlideSettings/ActiveSlideSettings';
 import { connect } from 'react-redux'
 import { RootState } from 'src/store/store'
-import { turnRightBar } from 'src/store/actionCreators/viewAction'
 import './RightBarContainer.css'
 
-const EMPTY_RIGHT_BAR = 0;
-const PRESENTATION_TITLE_FORM = 1;
-
-export {EMPTY_RIGHT_BAR, PRESENTATION_TITLE_FORM}
+export const EMPTY_RIGHT_BAR = 0;
+export const PRESENTATION_TITLE_FORM = 1;
+export const ACTIVE_SLIDE_FORM = 2;
 
 function RightBarContainer(props: Props) {
   // const [state, updateState] = useState("#FFF");
@@ -22,9 +21,12 @@ function RightBarContainer(props: Props) {
     case PRESENTATION_TITLE_FORM:
       rightBarContainerInner = <PresentationTitle />;
       break;
-    case 2:
-      rightBarContainerInner = <ColorPicker />;
-      break;
+    case ACTIVE_SLIDE_FORM:
+      rightBarContainerInner = <ActiveSlideSettings />;
+      break;  
+    // case 2:
+    //   rightBarContainerInner = <ColorPicker />;
+    //   break;
     default:
       rightBarContainerInner = <></>;    
   }

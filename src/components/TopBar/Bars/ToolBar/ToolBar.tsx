@@ -1,10 +1,9 @@
 import React from 'react';
 import { store } from 'src/store/store';
 import Button from './Button/Button';
-import Select from './Select/Select';
 import './ToolBar.css';
 import './Button/Button.css';
-import { showModal } from 'src/store/actionCreators/viewAction'
+import { showModal, turnRightBar } from 'src/store/actionCreators/viewAction'
 import { selectedSlidesOff, selectedSlidesOn, addSlide } from 'src/store/actionCreators/editorAction'
 import { undo, redo } from 'src/store/actionCreators/historyAction'
 import { 
@@ -12,8 +11,10 @@ import {
   CONFIRM_DELETE_SLIDES, 
   CONFIRM_DELETE_SLIDE, 
   CONFIRM_CREATE_NEW_PRESENTATION, 
-  OPEN_PRESENTATION 
+  OPEN_PRESENTATION,
+  ADD_IMAGE
 } from 'src/components/Modal/Modal'
+import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer';
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -40,11 +41,9 @@ function newPresentation() {
 function openPresentation() {
   store.dispatch(showModal(OPEN_PRESENTATION));
   let fileDialog = document.querySelector('[name="modalFileDialog"]') as HTMLFormElement;
-  console.log(fileDialog);
   if (fileDialog !== null) {
     fileDialog.value = null;
-  }
-  
+  }  
 }
 
 function savePresentation () {
@@ -62,6 +61,8 @@ function savePresentation () {
 
 function newSlide() {
   store.dispatch(addSlide());
+  store.dispatch(turnRightBar(EMPTY_RIGHT_BAR));
+  store.dispatch(turnRightBar(ACTIVE_SLIDE_FORM));
 }
 
 function undoAction() {
@@ -91,11 +92,21 @@ function deleteSlides() {
   if (slides.selectedMode && slides.selectedSlides.length > 0) {
     store.dispatch(showModal(CONFIRM_DELETE_SLIDES));
   } else if (!slides.selectedMode) {
-    
     store.dispatch(showModal(CONFIRM_DELETE_SLIDE));
   } else {
     store.dispatch(showModal(NOT_CHOICE_SLIDES));
   }
+}
+
+function addImage() {
+  let activeSlide = store.getState().editor.presentation.activeSlide;
+  if (activeSlide !== '') {
+    store.dispatch(showModal(ADD_IMAGE));
+    let fileDialog = document.querySelector('[name="modalImageDialog"]') as HTMLFormElement;
+    if (fileDialog !== null) {
+      fileDialog.value = null;
+    }
+  }  
 }
 
 const buttonsList = [
@@ -155,6 +166,33 @@ const buttonsList = [
       onclick: deleteSlides
     },
   ],
+  [
+    {
+      title: "Add text",
+      className: "btn btn_text",
+      onclick: newSlide
+    },
+    {
+      title: "Add image",
+      className: "btn btn_image",
+      onclick: addImage,
+    },
+    {
+      title: "Add circle",
+      className: "btn btn_circle",
+      onclick: deleteSlides
+    },
+    {
+      title: "Add rectangle",
+      className: "btn btn_rectangle",
+      onclick: deleteSlides
+    },
+    {
+      title: "Add triangle",
+      className: "btn btn_triangle",
+      onclick: deleteSlides
+    },
+  ],
 ]
 
 
@@ -166,14 +204,6 @@ function ToolBar() {
           <div className="itemGroupContainer" key={`btnGroup${btnGroupNumber}`} >{btnGroup.map((button, btnNumber) => <Button key={`btn${btnGroupNumber}${btnNumber}`} title={button.title} className={button.className} onclick={button.onclick} />)}</div>)}
       {/* 
       <div className="itemGroupContainer">
-        <Button title="Text box" className="btn btn_text" />
-        <Button title="Add image" className="btn btn_image" />
-        <Button title="Add circle" className="btn btn_circle" />
-        <Button title="Add rectanle" className="btn btn_rectangle" />
-        <Button title="Add triangle" className="btn btn_triangle" />
-      </div>
-
-      <div className="itemGroupContainer">
         <Select title="Select font" className="select select__fontFamily" elements={fontBase}/>
         <Select title="Select font" className="select select__fontSize" elements={fontSizeBase}/>
         <Button title="Bold" className="btn btn_bold" />
@@ -181,14 +211,7 @@ function ToolBar() {
         <Button title="Underlined" className="btn btn_underlined" />
         <Button title="Text color" className="btn btn_textColor" />
       </div>
-
-      <div className="itemGroupContainer">
-        <Button title="Add background image" className="btn btn_bckgImg" />
-        <Button title="Change color scheme" className="btn btn_palette" />
-        <Button title="Fill color" className="btn btn_fillColor" />
-        <Button title="Border color" className="btn btn_borderColor" />
-        <Button title="Border weight" className="btn btn_borderWeight" />
-      </div> */}
+     */}
 
     </div>
   );

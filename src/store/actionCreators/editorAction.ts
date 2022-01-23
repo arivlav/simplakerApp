@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { Editor, Identifier, Mode } from 'src/types';
+import { Background, Editor, Identifier, Mode } from 'src/types';
 import { 
     CHANGE_TITLE, 
     ADD_SLIDE, 
@@ -13,6 +13,8 @@ import {
     SELECTED_SLIDES_DELETE, 
     SELECTED_SLIDES_OFF, 
     SELECTED_SLIDES_ON, 
+    CHANGE_BACKGROUND_SLIDE,
+    ADD_CONTENT,
 } from 'src/store/ruducers/editorReducer'
 
 export function changeStateEditor(editor: Editor) {
@@ -67,6 +69,13 @@ export function deleteSlide(): AnyAction {
     }
 }
 
+export function changeSlideBackground(background: Background): AnyAction {
+    return {
+        type: CHANGE_BACKGROUND_SLIDE,
+        background: background,
+    }
+}
+
 export function selectedSlidesOn(): AnyAction {
     return {
         type: SELECTED_SLIDES_ON,
@@ -90,5 +99,13 @@ export function selectedSlidesDelete(slidesIdentifier: Identifier): AnyAction {
     return {
         type: SELECTED_SLIDES_DELETE,
         slidesIdentifier: slidesIdentifier,
+    }
+}
+
+export function addContent(contentType: string, imageUrl: string = ''): AnyAction {
+    return {
+        type: ADD_CONTENT,
+        contentType: contentType,
+        imageUrl: imageUrl,
     }
 }

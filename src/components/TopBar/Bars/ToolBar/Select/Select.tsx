@@ -3,23 +3,25 @@ import './Select.css';
 import Option from './Option/Option';
 
 type SelectType = {
-  id?: string,
-  value: string
+  id: string,
+  value: string,
 }
 
 type SelectProps = {
   title: string,
   className: string,
-  elements?: Array<SelectType>
+  elements: Array<SelectType>,
+  onchange: Function,
+  selectedValue: string,
 }
 
 function Select(props: SelectProps) {
 
-  let selectElements = props.elements?.map(el => (<Option value={el.value} />))
+  let selectElements = props.elements.map(el => (<Option key={el.id} value={el.value} />))
 
   return (
     <div >
-      <select title={props.title} className={props.className}>
+      <select title={props.title} className={props.className}  value={props.selectedValue} onChange={(e) => props.onchange(e)}>
         {selectElements}
       </select>
     </div>

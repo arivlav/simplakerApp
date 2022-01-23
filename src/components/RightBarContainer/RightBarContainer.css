@@ -1,11 +1,16 @@
 .RightBarContainer {
   grid-area: RightBarContainer;
   background-color: #F1F1F1;
+  text-align: left;
 }
 
 .RightBarContainer__inner {
   margin: 20px 20px 20px 20px;
   text-align: left;
+}
+
+.RightBarContainer__form-group {
+  margin: 0 0 10px 0;
 }
 
 .RightBarContainer__label {
@@ -16,6 +21,7 @@
 }
 
 .RightBarContainer__inputText{
+  margin: 0 0 0 0;
   font-size: 16px;
   line-height: 1.3;
   letter-spacing: 0.035em;

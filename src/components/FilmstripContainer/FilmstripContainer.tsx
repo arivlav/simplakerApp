@@ -6,12 +6,16 @@ import { RootState } from 'src/store/store'
 import { changeTitle } from 'src/store/actionCreators/editorAction'
 
 function FilmstripContainer(props: Props) {
+    // console.log('active slide: '+props.activeSlide);
+    // console.log(props.slideList);
     return (
       <div className="FilmstripContainer">
         {props.slideList.map(
           (slide, index) => <Slide 
             key={`slide-${slide.id}`} 
-            className={(props.activeSlide == slide.id) ? "slide-miniature-inner slide-miniature_active" : "slide-miniature-inner"}  
+            className={(props.activeSlide === slide.id) ? "slide-miniature-inner slide-miniature_active" : "slide-miniature-inner"}
+            draggable={true}
+            isWorkspace={false} 
             slide={slide}/>
         )}
       </div>

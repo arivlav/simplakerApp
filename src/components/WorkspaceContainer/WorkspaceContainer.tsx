@@ -1,15 +1,39 @@
 import React from 'react';
+import { store } from 'src/store/store';
+import { Slide as SlideType } from 'src/types';
 import Slide from '../Slide/Slide';
 import './WorkspaceContainer.css';
+import { connect } from 'react-redux'
+import { RootState } from 'src/store/store'
 
-function WorkspaceContainer() {
+function WorkspaceContainer(props:Props) {
+  let slide: JSX.Element = (props.currentSlide !== undefined) 
+    ? <Slide key={`workSlide-${props.currentSlide.id}`} className="slide" slide={props.currentSlide} draggable={false} isWorkspace={true} />
+    : <p> Choose or add new slide</p>;
   return (
     <div className="WorkspaceContainer">
       <div className="WorkspaceContainer__inner">
-        {/* <Slide className="slide" text="Hello" slide={} />  */}
+        {slide} 
       </div>    
     </div>
   );
 }
 
-export default WorkspaceContainer;
+function mapStateToProps(state: RootState) {
+  return {
+    currentSlide: state.editor.presentation.slideList.find((slide) => slide.id === state.editor.presentation.activeSlide)
+  }
+}
+  
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    //changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
+  }
+}
+  
+type StateProps = ReturnType<typeof mapStateToProps>
+type DispatchProps = ReturnType<typeof mapDispatchToProps>
+
+type Props = StateProps & DispatchProps
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkspaceContainer);

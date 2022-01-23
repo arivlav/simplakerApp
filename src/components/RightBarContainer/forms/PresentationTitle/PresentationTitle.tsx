@@ -9,11 +9,11 @@ function PresentationTitle(props: Props) {
         setTimeout(() => {
             const target = evt.target as HTMLButtonElement;
             props.changeTitle(target.value);
-        }, 3000);
+        }, 1500);
     }
     return (
         <div className="presentationTitle">
-            <label className="RightBarContainer__label">Название презентации</label>
+            <label className="RightBarContainer__label">Presentation's name</label>
             <input className="RightBarContainer__inputText" type="text" name="Title" defaultValue={props.title} onChange={(evt) => timer(evt)} />
         </div>
     );

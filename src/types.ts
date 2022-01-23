@@ -5,12 +5,7 @@ type Editor = {
 
 type Mode = "view" | "edit";
 
-type Identifier = string; //А почему не сразу стринг там, где нужен id? Тут особая какая то строка будет. Все строки по какому-то шаблону 
-
-// type Palette = {
-//     readonly currentColor: string;
-//     colorList: Array<string>; //здесь перечислим цвета 
-// }
+type Identifier = string;
 
 type Presentation = {
     title: string;
@@ -25,24 +20,18 @@ type Presentation = {
 type Slide = {
     id: Identifier;
     background: Background;
-    contentList: Array<Content>; 
-    //selectedContents: Array<Identifier>; //для записи выбранных элементов на странице
+    contentList: Array<Content>;
+    activeContent: string; 
 }
 
-type BackgroundImage = {
-    value: "backgroundImage";
-    backgroundImage: string;
-}
-
-type BackgroundColor = {
-    value: "backgroundColor";
-    backgroundColor: string;
-}
-
-type Background = BackgroundImage | BackgroundColor;
+type Background = {
+    type: string;
+    value: string;
+}    
 
 type Content = {
     id: Identifier;
+    name: string;
     coordinates: Point;
     width: number;
     height: number;
@@ -50,20 +39,18 @@ type Content = {
     zIndex: number;        
 }
 
-type ContentType = Image | Primitive | TextBox;
+type ContentType = Image & Primitive & TextBox;
 
 type Image = {
-    imagePath: string;
+    imageUrl: string;
 }
 
 type Primitive = {
-    type: PrimitiveType;
+    type: string;
     strokeColor: string;
     fillColor: string;
     strokeWeight: number;
 }
-
-type PrimitiveType = "circle" | "triangle" | "rectangle";
 
 type Point = {
     x: number;
@@ -71,35 +58,24 @@ type Point = {
 }
 
 type TextBox = {
-    value: string;
+    text: string;
     fontFamily: string;
     fontColor: string;
     fontSize: number;
-    fontStyle: FontStyle; //вынести в тип. Done
-}   
-
-type FontStyle = "italic" | "bold" | "underline"; 
-
-// Export
-// Undo
-// Redo
+    fontStyle: string;
+}    
 
 export type {
     Editor,
     Mode,
     Identifier,
-    // Palette,
     Presentation,
     Slide,
-    BackgroundImage,
-    BackgroundColor,
     Background,
     Content,
     ContentType,
     Image,
     Primitive,
-    PrimitiveType,
     Point,
     TextBox,
-    FontStyle
 };

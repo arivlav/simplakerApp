@@ -3,8 +3,8 @@ import {
     SHOW_MODAL, 
     CLOSE_MODAL, 
     TURN_RIGHT_BAR,
+    SET_DEFAULT_SLIDE_COLOR,
 } from 'src/store/ruducers/viewReducer'
-import { Identifier } from 'src/types'
 
 export function showModal(modal_type: Number): AnyAction {
     return {
@@ -23,5 +23,12 @@ export function turnRightBar(rightBarContent: Number): AnyAction {
     return {
         type: TURN_RIGHT_BAR,
         rightBarContent: rightBarContent,
+    }
+}
+
+export function setDefaultSlideColor(color: string): AnyAction {
+    return {
+        type: SET_DEFAULT_SLIDE_COLOR,
+        slideColor: color,
     }
 }
