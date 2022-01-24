@@ -1,3 +1,7 @@
 .content {
   position: absolute;
 }
+
+.content_active {
+  border: 1px solid rgb(90, 240, 177);
+}

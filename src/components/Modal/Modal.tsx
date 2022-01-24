@@ -3,8 +3,8 @@ import './Modal.css'
 import { connect } from 'react-redux'
 import { RootState, store } from 'src/store/store'
 import { showModal, closeModal, turnRightBar } from 'src/store/actionCreators/viewAction'
-import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
-import { newPresentation, deleteSlides, openPresentation, deleteSlide, addContent } from 'src/store/actionCreators/editorAction'
+import { ACTIVE_CONTENT_FORM, ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
+import { newPresentation, deleteSlides, openPresentation, deleteSlide, addContent, setActiveContent } from 'src/store/actionCreators/editorAction'
 import { clearHistory } from 'src/store/actionCreators/historyAction'
 import SingleFooterButton from 'src/components/Modal/ModalElements/Buttons/SingleFooterButton'
 import TwoFooterButton from 'src/components/Modal/ModalElements/Buttons/TwoFooterButton'
@@ -82,7 +82,9 @@ function addImage() {
         let reader = new FileReader();
         reader.readAsDataURL(fileDialog.files[0]);
         reader.onload = function (e) {
-            store.dispatch(addContent("image", e.target?.result as string));
+            let newImage = e.target as FileReader;
+            store.dispatch(addContent("image", newImage.result as string));
+            store.dispatch(turnRightBar(ACTIVE_CONTENT_FORM));
         };
         store.dispatch(closeModal());
     }

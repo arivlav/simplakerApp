@@ -1,10 +1,11 @@
 import React from 'react';
+import ReactPDF from '@react-pdf/renderer';
 import { store } from 'src/store/store';
 import Button from './Button/Button';
 import './ToolBar.css';
 import './Button/Button.css';
 import { showModal, turnRightBar } from 'src/store/actionCreators/viewAction'
-import { selectedSlidesOff, selectedSlidesOn, addSlide } from 'src/store/actionCreators/editorAction'
+import { selectedSlidesOff, selectedSlidesOn, addSlide, togglePresentationMode } from 'src/store/actionCreators/editorAction'
 import { undo, redo } from 'src/store/actionCreators/historyAction'
 import { 
   NOT_CHOICE_SLIDES, 
@@ -15,6 +16,7 @@ import {
   ADD_IMAGE
 } from 'src/components/Modal/Modal'
 import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer';
+import FilmstripContainer from 'src/components/FilmstripContainer/FilmstripContainer';
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -109,6 +111,15 @@ function addImage() {
   }  
 }
 
+function exportPresentation() {
+  // ReactPDF.render(<FilmstripContainer />, `${store.getState().editor.presentation.title}.pdf`);
+}
+
+function previewModeOn() {
+  store.dispatch(togglePresentationMode());
+  console.log(store.getState().editor.mode);
+}
+
 const buttonsList = [
   [
     {
@@ -129,12 +140,12 @@ const buttonsList = [
     {
       title: "Export presentation",
       className: "btn btn_export",
-      onclick: newPresentation
+      onclick: exportPresentation
     },
     {
       title: "Start slideshow",
       className: "btn btn_play",
-      onclick: newPresentation
+      onclick: previewModeOn
     }
   ],
   [

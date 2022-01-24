@@ -42,22 +42,27 @@ function Slide(props: Props) {
   }
 
   function dragStartHandler(e: React.DragEvent<HTMLDivElement>, slide: SlideType) {
-    console.log('move slide', slide);
+    if (!props.isWorkspace) {
+      console.log('move slide', slide);
+    }
+    e.stopPropagation();
   }
 
   function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {
-
+    e.stopPropagation();
   }
 
   function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
+    e.stopPropagation();
   }
 
   function dropHandler(e: React.DragEvent<HTMLDivElement>, slide: SlideType) {
     if (!props.isWorkspace) {
-    e.preventDefault();
-    console.log('slide', slide);
+      e.preventDefault();
+      console.log('slide', slide);
     }
+    e.stopPropagation();
   }
 
   const backgroundValue = props.slide.background.value;
@@ -65,15 +70,16 @@ function Slide(props: Props) {
     ? { backgroundColor: backgroundValue } 
     : { backgroundImage: `url(${backgroundValue})`, backgroundRepeat: 'no-repeat' };
 
-  function changeActiveSlide() {
+  function changeActiveSlide(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     props.makeActiveSlide(props.slide.id);
     props.turnRightBar(EMPTY_RIGHT_BAR);
     props.turnRightBar(ACTIVE_SLIDE_FORM);
+    e.stopPropagation();
   }
   return (
     <div 
       className="slide-miniature"
-      onClick={changeActiveSlide} 
+      onClick={(e) => changeActiveSlide(e)} 
       draggable={props.draggable}
       onDragStart={(e) => dragStartHandler(e, props.slide)}
       onDragLeave={(e) => dragEndHandler(e)}

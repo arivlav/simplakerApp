@@ -6,6 +6,7 @@ import Header from 'src/components/Header/Header';
 import RightBarContainer from 'src/components/RightBarContainer/RightBarContainer';
 import Footer from 'src/components/Footer/Footer';
 import Modal from 'src/components/Modal/Modal';
+import Player from 'src/components/Player/Player';
 import { store } from './store/store';
 import { redo, undo } from './store/actionCreators/historyAction';
 
@@ -31,6 +32,7 @@ function App () {
         <RightBarContainer />
         <Footer />
         <Modal />
+        <Player />
       </div>
   );
 }

@@ -15,6 +15,9 @@ import {
     SELECTED_SLIDES_ON, 
     CHANGE_BACKGROUND_SLIDE,
     ADD_CONTENT,
+    SET_CONTENT_COORDINATES,
+    ACTIVE_CONTENT,
+    TOGGLE_PRESENTATION_MODE
 } from 'src/store/ruducers/editorReducer'
 
 export function changeStateEditor(editor: Editor) {
@@ -107,5 +110,26 @@ export function addContent(contentType: string, imageUrl: string = ''): AnyActio
         type: ADD_CONTENT,
         contentType: contentType,
         imageUrl: imageUrl,
+    }
+}
+
+export function setCoordinates(contentId: string, x: number, y: number): AnyAction {
+    return {
+        type: SET_CONTENT_COORDINATES,
+        x: x,
+        y: y,
+    }
+}
+
+export function setActiveContent(activeContent: string): AnyAction {
+    return {
+        type: ACTIVE_CONTENT,
+        activeContent: activeContent,
+    }
+}
+
+export function togglePresentationMode(): AnyAction {
+    return {
+        type: TOGGLE_PRESENTATION_MODE,
     }
 }

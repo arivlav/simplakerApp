@@ -1,5 +1,8 @@
+import { setMaxListeners } from 'process';
 import React from 'react';
-import { Identifier } from "src/types"
+import { setCoordinates } from 'src/store/actionCreators/editorAction';
+import { store } from 'src/store/store';
+import { Content, Identifier, Point } from "src/types"
 
 export const SLIDE_HEIGHT = 900;
 export const SLIDE_WIDTH = 1600;
@@ -25,6 +28,62 @@ export const useResize = (myRef: React.MutableRefObject<HTMLDivElement>) => {
     }, [myRef])
 
     return { width, height }
+}
+
+export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ratio: number, content: Content) => {
+    let newPos: Point = {
+        x: content.coordinates.x,
+        y: content.coordinates.y
+    };
+
+    React.useEffect(() => {
+        const currentContent = myRef.current;
+
+        let startPos: Point;
+
+
+        function handleMouseDown(e: MouseEvent): void {
+            startPos = {
+                x: e.pageX,
+                y: e.pageY,
+            };
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", handleMouseUp);
+        }
+
+        function handleMouseMove(e: MouseEvent): void {
+            if (!e.defaultPrevented) {
+                const delta = {
+                    x: e.pageX - startPos.x,
+                    y: e.pageY - startPos.y
+                }
+                newPos = {
+                    x: ratio * content.coordinates.x + delta.x,
+                    y: ratio * content.coordinates.y + delta.y
+                }
+
+                if (currentContent !== null) currentContent.style.left = String(newPos.x) + 'px';
+                if (currentContent !== null) currentContent.style.top = String(newPos.y) + 'px';
+            }
+        }
+
+        function handleMouseUp(): void {
+            if (newPos) {
+                //store.dispatch(setCoordinates(content.id, newPos.x/ratio, newPos.y/ratio));
+            }
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+        }
+
+        if (currentContent != null)
+            currentContent.addEventListener("mousedown", handleMouseDown);
+
+        return () => {
+            if (currentContent) {
+                currentContent.removeEventListener("mousedown", handleMouseDown);
+            }
+        };
+    }, [myRef]);
 }
 
 export function generateIdentifier(): Identifier {

@@ -1,4 +1,4 @@
-import { Content, Editor, Identifier, Slide } from "src/types";
+import { Content, Editor, Identifier, Mode, Slide } from "src/types";
 import { defaultEditor } from "src/store/states/defaultEditorState"
 import { defaultSlide } from "src/store/states/defaultSlideState"
 import { AnyAction } from "redux"
@@ -23,7 +23,8 @@ export const SELECTED_SLIDES_OFF = 'SELECTED_SLIDES_OFF';
 export const CHANGE_BACKGROUND_SLIDE = 'CHANGE_BACKGROUND_SLIDE';
 export const ADD_CONTENT = 'ADD_CONTENT';
 export const DELETE_CONTENT = 'DELETE_CONTENT';
-
+export const SET_CONTENT_COORDINATES = 'SET_CONTENT_COORDINATES';
+export const ACTIVE_CONTENT = 'ACTIVE_CONTENT';
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
     let newSlideList: Array<Slide> = [];
@@ -38,9 +39,15 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
         case 'EXPORT_PRESENTATION':
             return defaultEditor
         case 'TOGGLE_PRESENTATION_MODE':
+            let editorMode: Mode;
+            if (editor.mode == "edit") {
+                editorMode = "view"
+            } else {
+                editorMode = "edit"
+            }
             return {
                 ...editor,
-                mode: action.mode
+                mode: editorMode
             }
         case CHANGE_STATE_EDITOR:
             return action.editor;
@@ -81,7 +88,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
         case DELETE_SLIDES:
             newSlideList = editor.presentation.slideList.filter((slide) => editor.presentation.selectedSlides.selectedSlides.find((identifier) => identifier === slide.id) === undefined);
             if (newSlideList.length > 0) {
-                newActiveSlide = (newSlideList.find((slide) => slide.id === editor.presentation.activeSlide) === undefined) ?  newSlideList[0].id : editor.presentation.activeSlide;
+                newActiveSlide = (newSlideList.find((slide) => slide.id === editor.presentation.activeSlide) === undefined) ? newSlideList[0].id : editor.presentation.activeSlide;
             }
             return {
                 ...editor,
@@ -165,7 +172,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ...editor.presentation,
                     selectedSlides: {
                         ...editor.presentation.selectedSlides,
-                        selectedSlides: editor.presentation.selectedSlides.selectedSlides.filter((identifier) =>identifier !== action.slidesIdentifier),
+                        selectedSlides: editor.presentation.selectedSlides.selectedSlides.filter((identifier) => identifier !== action.slidesIdentifier),
                     }
                 }
             }
@@ -177,7 +184,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ...editor.presentation,
                     slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
                         ? {
-                            ...slide, 
+                            ...slide,
                             contentList: [
                                 ...slide.contentList,
                                 {
@@ -188,7 +195,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                                     coordinates: defaultContent.coordinates,
                                     type: {
                                         ...defaultContent.type,
-                                        imageUrl: (action.contentType !== null) ? action.imageUrl : defaultContent.type.imageUrl, 
+                                        imageUrl: (action.contentType !== null) ? action.imageUrl : defaultContent.type.imageUrl,
                                     },
                                     zIndex: slide.contentList.length,
                                 }
@@ -201,6 +208,50 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ),
                 }
             }
+        case SET_CONTENT_COORDINATES:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: slide.contentList.map((content) => content.id === action.contentId
+                                ? {
+                                    ...content,
+                                    coordinates: {
+                                        x: action.x,
+                                        y: action.y
+                                    }
+
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case ACTIVE_CONTENT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            activeContent: action.activeContent
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }    
         default:
             return editor
     }
