@@ -594,6 +594,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                                 ? {
                                     ...content,
                                     coordinates: {
+                                        ...content.coordinates,
                                         x: action.x,
                                         y: action.y
                                     }

@@ -25,16 +25,17 @@ function Content(props: Props) {
   const contentRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const emptyRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
+  console.log('ads');
+  console.log(props.content.coordinates);
+
+
   const [newCoord, setCoord] = React.useState({ x: props.content.coordinates.x, y: props.content.coordinates.y });
 
-  useDragAndDrop(contentRef, slideRatio, props.content, setCoord, setContentCoordinates);
-  // console.log(newCoord);
-
   function setContentCoordinates(position: Point) {
-    console.log(position);
     props.setCoordinates(position.x, position.y);
-    console.log(props.currentContent.coordinates);
   }
+
+  useDragAndDrop(contentRef, slideRatio, props.content, setCoord, setContentCoordinates);
 
   function changeActiveContent(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (props.modeEditor !== "view") {
@@ -48,8 +49,13 @@ function Content(props: Props) {
   contentStyle.zIndex = (props.content.zIndex >= 0) ? props.content.zIndex : 0;
   contentStyle.width = slideRatio * props.content.width;
   contentStyle.height = slideRatio * props.content.height;
-  contentStyle.left = slideRatio * newCoord.x;
-  contentStyle.top = slideRatio * newCoord.y;
+  if (props.draggable) {
+    contentStyle.left = slideRatio * newCoord.x;
+    contentStyle.top = slideRatio * newCoord.y;
+  } else {
+    contentStyle.left = slideRatio * props.content.coordinates.x;
+    contentStyle.top = slideRatio * props.content.coordinates.y;
+  }
   switch (props.content.name) {
     case "image":
       elementStyle.objectFit = 'contain';
@@ -98,6 +104,7 @@ function Content(props: Props) {
     default:
       element = <span></span>
   }
+  console.log(contentStyle);
   return (
     <div className={(props.content.id !== props.activeContent || props.modeEditor === "view") ? "content" : "content content_active"}
       ref={(props.draggable) ? contentRef : emptyRef}

@@ -22,7 +22,7 @@
 .player__content {
     border-radius: 5px;
     background-color: #fff;
-    width: 85%;
+    width: 75%;
     transform: scale(0.5);
     transition: 0.3s all;
     color: #8f8f8f;

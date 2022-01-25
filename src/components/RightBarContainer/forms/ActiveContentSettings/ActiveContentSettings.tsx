@@ -85,7 +85,7 @@ function ActiveContentSettings(props: Props) {
 
     const isSvg = (props.currentContent !== undefined && props.currentContent.name !== 'image' && props.currentContent.name !== 'text');
     const isText = (props.currentContent !== undefined && props.currentContent.name === 'text');
-    const isCircle = (isSvg && props.currentContent.name !== 'circle');
+    const isCircle = (isSvg && props.currentContent.name === 'circle');
 
     return (
         <div>
@@ -147,14 +147,14 @@ function ActiveContentSettings(props: Props) {
                     &#x25BA;&#x25C4;
                 </button>
                 <button 
-                    className={(isCircle) 
+                    className={(!isCircle) 
                         ? "RightBarContainer__btn RightBarContainer__btn_size RightBarContainer__btn_second"
                         : "RightBarContainer__btn RightBarContainer__btn_size RightBarContainer__btn_second RightBarContainer__btn_hidden"} 
                     onClick={() => props.extendVerticalContent()}>
                         &#x25B2; <br />&#x25BC;
                 </button>
                 <button 
-                    className={(isCircle) 
+                    className={(!isCircle) 
                         ? "RightBarContainer__btn RightBarContainer__btn_size RightBarContainer__btn_second"
                         : "RightBarContainer__btn RightBarContainer__btn_size RightBarContainer__btn_second RightBarContainer__btn_hidden"}
                     onClick={() => props.narrowVerticalContent()}>

@@ -52,7 +52,7 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
     
 
     function handleMouseMove(e: MouseEvent): void {
-        //if (!e.defaultPrevented) {
+        e.preventDefault();
             const delta = {
                 x: e.pageX - startPos.current.x,
                 y: e.pageY - startPos.current.y
@@ -64,11 +64,11 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
 
             setCoord(newPlace);
             newPosition.current = newPlace;
-        //}
+        
     }
 
     function handleMouseUp(): void {
-        // console.log('ушло ' + newPos.x/ratio + ' ' + newPos.y/ratio);
+        console.log('работа');
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
         setContentCoordinates({x: newPosition.current.x/ratio, y: newPosition.current.y/ratio});
