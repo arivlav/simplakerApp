@@ -28,8 +28,8 @@ function Player(props: Props) {
     }
 
     return (
-        <div className={props.editorMode == "view" ? "player active" : "player"} onClick={closePlayer}>
-            <div className={props.editorMode == "view" ? "player__content active" : "player__content"} onClick={(e) => e.stopPropagation()}>
+        <div className={props.editorMode === "view" ? "player active" : "player"} onClick={closePlayer}>
+            <div className={props.editorMode === "view" ? "player__content active" : "player__content"} onClick={(e) => e.stopPropagation()}>
                 <div className="player__content__header">
                     <button className="player__header__closeBtn" title="Close popup" onClick={closePlayer}>X</button>
                 </div>

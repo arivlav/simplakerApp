@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactPDF from '@react-pdf/renderer';
 import { store } from 'src/store/store';
 import Button from './Button/Button';
 import './ToolBar.css';
@@ -16,24 +15,6 @@ import {
   ADD_IMAGE
 } from 'src/components/Modal/Modal'
 import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer';
-
-let fontBase = [
-  { id: '1', value: 'Roboto' },
-  { id: '2', value: 'Arial' },
-  { id: '3', value: 'Colibri' },
-  { id: '4', value: 'Georgia' }
-];
-
-let fontSizeBase = [
-  { value: '2' },
-  { value: '4' },
-  { value: '6' },
-  { value: '8' },
-  { value: '10' },
-  { value: '12' },
-  { value: '14' },
-  { value: '16' },
-];
 
 function newPresentation() {
   store.dispatch(showModal(CONFIRM_CREATE_NEW_PRESENTATION));
@@ -126,9 +107,9 @@ function addTriangle() {
   store.dispatch(addContent("triangle"));
 }
 
-function exportPresentation() {
-  // ReactPDF.render(<FilmstripContainer />, `${store.getState().editor.presentation.title}.pdf`);
-}
+// function exportPresentation() {
+//   // ReactPDF.render(<FilmstripContainer />, `${store.getState().editor.presentation.title}.pdf`);
+// }
 
 function previewModeOn() {
   store.dispatch(togglePresentationMode());
@@ -151,11 +132,11 @@ const buttonsList = [
       className: "btn btn_saveFile",
       onclick: savePresentation
     },
-    {
-      title: "Export presentation",
-      className: "btn btn_export",
-      onclick: exportPresentation
-    },
+    // {
+    //   title: "Export presentation",
+    //   className: "btn btn_export",
+    //   onclick: exportPresentation
+    // },
     {
       title: "Start slideshow",
       className: "btn btn_play",
@@ -227,17 +208,6 @@ function ToolBar() {
       {buttonsList.map(
         (btnGroup, btnGroupNumber) =>
           <div className="itemGroupContainer" key={`btnGroup${btnGroupNumber}`} >{btnGroup.map((button, btnNumber) => <Button key={`btn${btnGroupNumber}${btnNumber}`} title={button.title} className={button.className} onclick={button.onclick} />)}</div>)}
-      {/* 
-      <div className="itemGroupContainer">
-        <Select title="Select font" className="select select__fontFamily" elements={fontBase}/>
-        <Select title="Select font" className="select select__fontSize" elements={fontSizeBase}/>
-        <Button title="Bold" className="btn btn_bold" />
-        <Button title="Italic" className="btn btn_italic" />
-        <Button title="Underlined" className="btn btn_underlined" />
-        <Button title="Text color" className="btn btn_textColor" />
-      </div>
-     */}
-
     </div>
   );
 }

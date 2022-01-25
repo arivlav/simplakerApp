@@ -1,10 +1,9 @@
 import React from 'react';
 import './ColorPicker.css';
-import { Background, Slide } from 'src/types';
+import { Background } from 'src/types';
 import { changeContentFillColor, changeContentStrokeColor, changeSlideBackground } from 'src/store/actionCreators/editorAction'
 import { connect } from 'react-redux'
 import { RootState } from 'src/store/store'
-import Circle from '../../WorkspaceContainer/Slide/Content/Primitive/PrimitiveCircle';
 import { setDefaultSlideColor } from 'src/store/actionCreators/viewAction';
 import { isColor } from 'src/helpers/editorHelper';
 

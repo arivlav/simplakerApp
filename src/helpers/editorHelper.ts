@@ -27,48 +27,12 @@ export const useResize = (myRef: React.MutableRefObject<HTMLDivElement>) => {
     return { width, height }
 }
 
-export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ratio: number, content: Content, setContentCoordinates: Function): Point => {
-    const [newCoord, setCoord] = React.useState({x: 0, y: 0});
+export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ratio: number, content: Content, setCoord: Function, setContentCoordinates: Function) => {
+    const startPos = React.useRef({x: 0, y: 0});
+    const newPosition = React.useRef({x: content.coordinates.x, y: content.coordinates.y});
+
     React.useEffect(() => {
         const currentContent = myRef.current;
-        let startPos: Point;
-        let newPos: Point;
-        function handleMouseDown(e: MouseEvent): void {
-            startPos = {
-                x: e.pageX,
-                y: e.pageY,
-            };
-            window.addEventListener("mousemove", handleMouseMove);
-            window.addEventListener("mouseup", handleMouseUp);
-        }
-
-        function handleMouseMove(e: MouseEvent): void {
-            if (!e.defaultPrevented) {
-                const delta = {
-                    x: e.pageX - startPos.x,
-                    y: e.pageY - startPos.y
-                }
-                newPos = {
-                    x: ratio * content.coordinates.x + delta.x,
-                    y: ratio * content.coordinates.y + delta.y
-                }
-
-                setCoord(newPos);
-
-                if (currentContent !== undefined && currentContent !== null) {
-                    currentContent.style.left = String(newPos.x) + 'px';
-                    currentContent.style.top = String(newPos.y) + 'px';
-                }
-            }
-        }
-
-        function handleMouseUp(): void {
-            //setContentCoordinates(newPos.x/ratio, newPos.y/ratio);
-            // console.log('ушло ' + newPos.x/ratio + ' ' + newPos.y/ratio);
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseup", handleMouseUp);
-        }
-
         if (currentContent !== undefined)
             currentContent.addEventListener("mousedown", handleMouseDown);
 
@@ -77,9 +41,38 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
                 currentContent.removeEventListener("mousedown", handleMouseDown);
             }
         };
-    }, [myRef]);
-    console.log(newCoord);
-    return newCoord;
+    }, []);    
+
+    function handleMouseDown(e: MouseEvent): void {
+        startPos.current.x = e.pageX;
+        startPos.current.y = e.pageY;
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    }
+    
+
+    function handleMouseMove(e: MouseEvent): void {
+        //if (!e.defaultPrevented) {
+            const delta = {
+                x: e.pageX - startPos.current.x,
+                y: e.pageY - startPos.current.y
+            }
+            const newPlace = {
+                x: ratio * content.coordinates.x + delta.x,
+                y: ratio * content.coordinates.y + delta.y
+            }
+
+            setCoord(newPlace);
+            newPosition.current = newPlace;
+        //}
+    }
+
+    function handleMouseUp(): void {
+        // console.log('ушло ' + newPos.x/ratio + ' ' + newPos.y/ratio);
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+        setContentCoordinates({x: newPosition.current.x/ratio, y: newPosition.current.y/ratio});
+    }
 }
 
 export function generateIdentifier(): Identifier {

@@ -1,7 +1,21 @@
 .content {
   position: absolute;
+  padding: 0 0 0 0;
 }
 
 .content_active {
-  border: 2px solid rgb(15, 159, 99);
+  outline: 2px solid rgb(15, 159, 99);
+}
+
+.content__text {
+  text-align: left;
+  word-wrap: normal;
+  overflow: hidden;
+}
+
+.content__text p {
+  margin: 1%;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: pre-wrap;
 }

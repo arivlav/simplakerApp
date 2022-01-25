@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { Background, Editor, Identifier, Mode } from 'src/types';
+import { Background, Editor, Identifier } from 'src/types';
 import { 
     CHANGE_TITLE, 
     ADD_SLIDE, 
@@ -23,7 +23,15 @@ import {
     CONTENT_PLACE_UP,
     CHANGE_CONTENT_STROKE_WIDTH,
     CHANGE_CONTENT_FILL_COLOR,
-    CHANGE_CONTENT_STROKE_COLOR
+    CHANGE_CONTENT_STROKE_COLOR,
+    CHANGE_CONTENT_FONT_FAMILY,
+    CHANGE_CONTENT_FONT_STYLE,
+    CHANGE_CONTENT_FONT_SIZE,
+    CHANGE_CONTENT_TEXT,
+    NARROW_CONTENT,
+    EXTEND_CONTENT,
+    EXTEND_VERTICAL_CONTENT,
+    NARROW_VERTICAL_CONTENT,
 } from 'src/store/ruducers/editorReducer'
 
 export function changeStateEditor(editor: Editor) {
@@ -176,5 +184,57 @@ export function changeContentStrokeWidth(width: number): AnyAction {
     return {
         type: CHANGE_CONTENT_STROKE_WIDTH,
         width: width,
+    }
+}
+
+export function changeContentFontFamily(font: string): AnyAction {
+    return {
+        type: CHANGE_CONTENT_FONT_FAMILY,
+        font: font,
+    }
+}
+
+export function changeContentFontStyle(style: string): AnyAction {
+    return {
+        type: CHANGE_CONTENT_FONT_STYLE,
+        style: style,
+    }
+}
+
+export function changeContentFontSize(size: number): AnyAction {
+    return {
+        type: CHANGE_CONTENT_FONT_SIZE,
+        size: size,
+    }
+}
+
+export function changeContentText(text: string): AnyAction {
+    return {
+        type: CHANGE_CONTENT_TEXT,
+        text: text,
+    }
+}
+
+export function narrowContent(): AnyAction {
+    return {
+        type: NARROW_CONTENT
+    }
+}
+
+export function narrowVerticalContent(): AnyAction {
+    return {
+        type: NARROW_VERTICAL_CONTENT
+    }
+}
+
+export function extendContent(): AnyAction {
+    return {
+        type: EXTEND_CONTENT
+    }
+}
+
+export function extendVerticalContent(): AnyAction {
+    return {
+        type: EXTEND_VERTICAL_CONTENT
     }
 }

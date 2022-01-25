@@ -1,7 +1,6 @@
 import { RootState, defaultState } from "src/store/store";
 import { AnyAction } from "redux";
 import { Editor } from "src/types";
-import { changeStateEditor } from "../actionCreators/editorAction";
 
 export const ADD_TO_HISTORY = 'ADD_TO_HISTORY';
 export const UNDO = 'UNDO';

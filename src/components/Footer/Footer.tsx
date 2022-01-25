@@ -5,7 +5,6 @@ function getYear() {
 }
 
 function Footer() {
-  const date = new Date();
   return (
     <div className={`${style.footer}`}>
       <p>&copy;Simplaker, { getYear() }</p> 

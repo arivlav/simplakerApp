@@ -1,6 +1,4 @@
 import React from 'react';
-import { store } from 'src/store/store';
-import { Slide as SlideType } from 'src/types';
 import Slide from '../Slide/Slide';
 import './WorkspaceContainer.css';
 import { connect } from 'react-redux'
@@ -27,7 +25,6 @@ function mapStateToProps(state: RootState) {
   
 const mapDispatchToProps = (dispatch: Function) => {
   return {
-    //changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
   }
 }
   

@@ -1,16 +1,12 @@
 import React from 'react'
 import './Content.css'
-import { Content as ElementType, Identifier, Point } from 'src/types'
+import { Content as ElementType, Point } from 'src/types'
 import { connect } from 'react-redux'
 import { RootState } from 'src/store/store'
 import { SLIDE_HEIGHT, SLIDE_WIDTH, useDragAndDrop } from 'src/helpers/editorHelper'
-import { makeActiveSlide } from 'src/store/actionCreators/editorAction'
 import { setCoordinates, setActiveContent } from 'src/store/actionCreators/editorAction'
 import { turnRightBar } from 'src/store/actionCreators/viewAction'
-import { ACTIVE_CONTENT_FORM, ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
-import { isColor } from 'src/helpers/editorHelper'
-import Image from 'src/components/WorkspaceContainer/Slide/Content/Image/Image'
-import { start } from 'repl'
+import { ACTIVE_CONTENT_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
 
 type propsContent = {
   content: ElementType;
@@ -29,12 +25,15 @@ function Content(props: Props) {
   const contentRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const emptyRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
-  const coord = useDragAndDrop(contentRef, slideRatio, props.content, setContentCoordinates);
+  const [newCoord, setCoord] = React.useState({ x: props.content.coordinates.x, y: props.content.coordinates.y });
+
+  useDragAndDrop(contentRef, slideRatio, props.content, setCoord, setContentCoordinates);
+  // console.log(newCoord);
 
   function setContentCoordinates(position: Point) {
-    // props.setCoordinates(position.x, position.y);
-    // console.log(props.currentContent.coordinates);
-    // changeActiveContent(e);
+    console.log(position);
+    props.setCoordinates(position.x, position.y);
+    console.log(props.currentContent.coordinates);
   }
 
   function changeActiveContent(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -46,30 +45,55 @@ function Content(props: Props) {
     if (props.draggable) e.stopPropagation();
   }
 
-  contentStyle.zIndex = props.content.zIndex;
+  contentStyle.zIndex = (props.content.zIndex >= 0) ? props.content.zIndex : 0;
+  contentStyle.width = slideRatio * props.content.width;
+  contentStyle.height = slideRatio * props.content.height;
+  contentStyle.left = slideRatio * newCoord.x;
+  contentStyle.top = slideRatio * newCoord.y;
   switch (props.content.name) {
     case "image":
       elementStyle.objectFit = 'contain';
       elementStyle.width = '100%';
       elementStyle.maxHeight = '100%';
-      contentStyle.width = slideRatio * props.content.width + 'px';
-      contentStyle.left = slideRatio * coord.x;
-      contentStyle.top = slideRatio * coord.y;
-      element = <img src={props.content.type.imageUrl} style={elementStyle} />;
+      element = <img src={props.content.type.imageUrl} style={elementStyle} alt="image" />;
       break;
     case "circle":
-      contentStyle.width = slideRatio * props.content.width;
       contentStyle.height = contentStyle.width;
-      contentStyle.left = slideRatio * coord.x;
-      contentStyle.top = slideRatio * coord.y;
-      element = <svg>
-          <circle r={contentStyle.width/2 - props.content.type.strokeWeight} 
-                  cx={contentStyle.width/2} 
-                  cy={contentStyle.width/2} 
-                  fill={props.content.type.fillColor} 
-                  stroke={props.content.type.strokeColor} 
-                  strokeWidth={(props.content.type.strokeWeight >= 0 && props.content.type.strokeWeight <= 5) ? props.content.type.strokeWeight : 6}/>
-        </svg>;
+      element = <svg width={contentStyle.width} height={contentStyle.height}>
+        <circle r={contentStyle.width / 2 - 1}
+          cx={contentStyle.width / 2}
+          cy={contentStyle.width / 2}
+          fill={props.content.type.fillColor}
+          stroke={props.content.type.strokeColor}
+          strokeWidth={(props.content.type.strokeWeight >= 0 && props.content.type.strokeWeight <= 5) ? props.content.type.strokeWeight : 6} />
+      </svg>;
+      break;
+    case "rectangle":
+      element = <svg width={contentStyle.width} height={contentStyle.height}>
+        <rect width={contentStyle.width}
+          height={contentStyle.height}
+          fill={props.content.type.fillColor}
+          stroke={props.content.type.strokeColor}
+          strokeWidth={(props.content.type.strokeWeight >= 0 && props.content.type.strokeWeight <= 5) ? props.content.type.strokeWeight : 6} />
+      </svg>;
+      break;
+    case "triangle":
+      element = <svg width={contentStyle.width} height={contentStyle.height} viewBox={`0 0 ${contentStyle.width} ${contentStyle.height}`}>
+        <polygon
+          points={`${contentStyle.width / 2}, ${contentStyle.top}, ${contentStyle.width}, ${contentStyle.height}, ${contentStyle.left}, ${contentStyle.height}`}
+          fill={props.content.type.fillColor}
+          stroke={props.content.type.strokeColor}
+          strokeWidth={(props.content.type.strokeWeight >= 0 && props.content.type.strokeWeight <= 5) ? slideRatio * props.content.type.strokeWeight : 6 * slideRatio } />
+      </svg>;
+      break;
+    case "text":
+      elementStyle.fontSize = slideRatio * props.content.type.fontSize;
+      elementStyle.fontFamily = props.content.type.fontFamily;
+      elementStyle.fontStyle = props.content.type.fontStyle;
+      elementStyle.color = props.content.type.fontColor;
+      element = <div className="content__text" style={elementStyle}>
+        <p>{props.content.type.text}</p>
+      </div>;
       break;
     default:
       element = <span></span>
@@ -78,9 +102,9 @@ function Content(props: Props) {
     <div className={(props.content.id !== props.activeContent || props.modeEditor === "view") ? "content" : "content content_active"}
       ref={(props.draggable) ? contentRef : emptyRef}
       style={contentStyle}
+      draggable={props.draggable}
       onClick={(e) => changeActiveContent(e)}
-      onMouseDown={(e) => changeActiveContent(e)}
-      onMouseUp={() => setContentCoordinates(coord)}>
+      onMouseDown={(e) => changeActiveContent(e)}>
 
       {element}
     </div>

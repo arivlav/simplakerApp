@@ -13,6 +13,12 @@
   margin: 0 0 10px 0;
 }
 
+.RightBarContainer__form-group_flex {
+  margin: -10px 0 10px 0;
+  display: flex;
+  align-items: center;
+}
+
 .RightBarContainer__form-group_hide {
   display: none;
 }
@@ -34,6 +40,17 @@
   font-weight: 400;
 }
 
+.RightBarContainer__textarea{
+  margin: 0 0 0 0;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: 0.035em;
+  font-weight: 400;
+  resize: none;
+  width: 100%;
+  height: 20vh;
+}
+
 .RightBarContainer__inputText_number{
   width: 20px;
 }
@@ -49,4 +66,12 @@
 
 .RightBarContainer__btn_second {
   margin: 0 0 0 5px;   
+}
+
+.RightBarContainer__btn_size {
+  min-width: 20px;   
+}
+
+.RightBarContainer__btn_hidden {
+  display: none;   
 }

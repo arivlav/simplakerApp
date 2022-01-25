@@ -1,6 +1,6 @@
 import React from 'react'
 import './Slide.css'
-import {Content as ElementType, Identifier, Slide as SlideType} from 'src/types'
+import {Identifier, Slide as SlideType} from 'src/types'
 import { connect } from 'react-redux'
 import { RootState } from 'src/store/store'
 import { makeActiveSlide } from 'src/store/actionCreators/editorAction'

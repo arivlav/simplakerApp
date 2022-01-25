@@ -1,11 +1,9 @@
-import { Content, Editor, Identifier, Mode, Slide } from "src/types";
+import { Editor, Identifier, Mode, Slide } from "src/types";
 import { defaultEditor } from "src/store/states/defaultEditorState"
 import { defaultSlide } from "src/store/states/defaultSlideState"
 import { AnyAction } from "redux"
-import { generateIdentifier } from 'src/helpers/editorHelper';
+import { generateIdentifier, SLIDE_HEIGHT, SLIDE_WIDTH } from 'src/helpers/editorHelper';
 import { defaultContent } from "../states/defaultContentState";
-import PresentationTitle from "src/components/RightBarContainer/forms/PresentationTitle/PresentationTitle";
-import { type } from "os";
 
 export const CHANGE_STATE_EDITOR = 'CHANGE_STATE_EDITOR';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
@@ -32,9 +30,18 @@ export const CHANGE_CONTENT_FILL_COLOR = 'CHANGE_CONTENT_FILL_COLOR';
 export const CONTENT_PLACE_UP = 'CONTENT_PLACE_UP';
 export const CHANGE_CONTENT_STROKE_COLOR = 'CHANGE_CONTENT_STROKE_COLOR';
 export const CHANGE_CONTENT_STROKE_WIDTH = 'CHANGE_CONTENT_STROKE_WIDTH';
+export const CHANGE_CONTENT_FONT_FAMILY = 'CHANGE_CONTENT_FONT_FAMILY';
+export const CHANGE_CONTENT_FONT_STYLE = 'CHANGE_CONTENT_FONT_STYLE';
+export const CHANGE_CONTENT_FONT_SIZE = 'CHANGE_CONTENT_FONT_SIZE';
+export const CHANGE_CONTENT_TEXT = 'CHANGE_CONTENT_TEXT';
+export const NARROW_CONTENT = 'NARROW_CONTENT';
+export const EXTEND_CONTENT = 'EXTEND_CONTENT';
+export const EXTEND_VERTICAL_CONTENT = 'EXTEND_VERTICAL_CONTENT';
+export const NARROW_VERTICAL_CONTENT = 'NARROW_VERTICAL_CONTENT';
 
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
+    const extendStep = 10;
     let newSlideList: Array<Slide> = [];
     let newActiveSlide: Identifier = "";
     switch (action.type) {
@@ -48,7 +55,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
             return defaultEditor
         case 'TOGGLE_PRESENTATION_MODE':
             let editorMode: Mode;
-            if (editor.mode == "edit") {
+            if (editor.mode === "edit") {
                 editorMode = "view"
             } else {
                 editorMode = "edit"
@@ -290,6 +297,102 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ),
                 }
             }
+        case EXTEND_CONTENT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    width: (content.width + 5 <= SLIDE_WIDTH) ? content.width + 5 : SLIDE_WIDTH,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case NARROW_CONTENT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    width: (content.width - extendStep >= 0) ? content.width - extendStep : 0,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case EXTEND_VERTICAL_CONTENT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    height: (content.height + extendStep <= SLIDE_HEIGHT) ? content.height + extendStep : SLIDE_HEIGHT,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case NARROW_VERTICAL_CONTENT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    height: (content.height - 5 >= 0) ? content.height - extendStep : 0,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
         case CHANGE_CONTENT_FILL_COLOR:
             return {
                 ...editor,
@@ -371,8 +474,115 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ),
                 }
             }
+        case CHANGE_CONTENT_FONT_FAMILY:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        fontFamily: action.font
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_FONT_STYLE:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        fontStyle: action.style
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_FONT_SIZE:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        fontSize: action.size
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_TEXT:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        text: action.text
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
         case SET_CONTENT_COORDINATES:
-            //console.log('action: ' + action.x + ' ' + action.y + ' activeContent: ' + editor.presentation.slideList[0].activeContent)
             return {
                 ...editor,
                 presentation: {
@@ -384,8 +594,8 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                                 ? {
                                     ...content,
                                     coordinates: {
-                                        x: action.x as number,
-                                        y: action.y as number
+                                        x: action.x,
+                                        y: action.y
                                     }
 
                                 }

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import ColorPicker from './ColorPicker/ColorPicker';
+import React from 'react';
 import PresentationTitle from 'src/components/RightBarContainer/forms/PresentationTitle/PresentationTitle';
 import ActiveSlideSettings from 'src/components/RightBarContainer/forms/ActiveSlideSettings/ActiveSlideSettings';
 import ActiveContentSettings from 'src/components/RightBarContainer/forms/ActiveContentSettings/ActiveContentSettings';
