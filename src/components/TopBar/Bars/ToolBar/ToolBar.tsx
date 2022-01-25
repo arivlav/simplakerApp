@@ -5,7 +5,7 @@ import Button from './Button/Button';
 import './ToolBar.css';
 import './Button/Button.css';
 import { showModal, turnRightBar } from 'src/store/actionCreators/viewAction'
-import { selectedSlidesOff, selectedSlidesOn, addSlide, togglePresentationMode } from 'src/store/actionCreators/editorAction'
+import { selectedSlidesOff, selectedSlidesOn, addSlide, togglePresentationMode, addContent } from 'src/store/actionCreators/editorAction'
 import { undo, redo } from 'src/store/actionCreators/historyAction'
 import { 
   NOT_CHOICE_SLIDES, 
@@ -16,7 +16,6 @@ import {
   ADD_IMAGE
 } from 'src/components/Modal/Modal'
 import { ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer';
-import FilmstripContainer from 'src/components/FilmstripContainer/FilmstripContainer';
 
 let fontBase = [
   { id: '1', value: 'Roboto' },
@@ -100,6 +99,10 @@ function deleteSlides() {
   }
 }
 
+function addText() {
+  store.dispatch(addContent("text"));
+}
+
 function addImage() {
   let activeSlide = store.getState().editor.presentation.activeSlide;
   if (activeSlide !== '') {
@@ -111,13 +114,24 @@ function addImage() {
   }  
 }
 
+function addCircle() {
+  store.dispatch(addContent("circle"));
+}
+
+function addRectangle() {
+  store.dispatch(addContent("rectangle"));
+}
+
+function addTriangle() {
+  store.dispatch(addContent("triangle"));
+}
+
 function exportPresentation() {
   // ReactPDF.render(<FilmstripContainer />, `${store.getState().editor.presentation.title}.pdf`);
 }
 
 function previewModeOn() {
   store.dispatch(togglePresentationMode());
-  console.log(store.getState().editor.mode);
 }
 
 const buttonsList = [
@@ -181,7 +195,7 @@ const buttonsList = [
     {
       title: "Add text",
       className: "btn btn_text",
-      onclick: newSlide
+      onclick: addText
     },
     {
       title: "Add image",
@@ -191,17 +205,17 @@ const buttonsList = [
     {
       title: "Add circle",
       className: "btn btn_circle",
-      onclick: deleteSlides
+      onclick: addCircle
     },
     {
       title: "Add rectangle",
       className: "btn btn_rectangle",
-      onclick: deleteSlides
+      onclick: addRectangle
     },
     {
       title: "Add triangle",
       className: "btn btn_triangle",
-      onclick: deleteSlides
+      onclick: addTriangle
     },
   ],
 ]

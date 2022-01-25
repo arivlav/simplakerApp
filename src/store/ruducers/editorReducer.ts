@@ -4,6 +4,8 @@ import { defaultSlide } from "src/store/states/defaultSlideState"
 import { AnyAction } from "redux"
 import { generateIdentifier } from 'src/helpers/editorHelper';
 import { defaultContent } from "../states/defaultContentState";
+import PresentationTitle from "src/components/RightBarContainer/forms/PresentationTitle/PresentationTitle";
+import { type } from "os";
 
 export const CHANGE_STATE_EDITOR = 'CHANGE_STATE_EDITOR';
 export const CHANGE_TITLE = 'CHANGE_TITLE';
@@ -25,6 +27,12 @@ export const ADD_CONTENT = 'ADD_CONTENT';
 export const DELETE_CONTENT = 'DELETE_CONTENT';
 export const SET_CONTENT_COORDINATES = 'SET_CONTENT_COORDINATES';
 export const ACTIVE_CONTENT = 'ACTIVE_CONTENT';
+export const CONTENT_PLACE_DOWN = 'CONTENT_PLACE_DOWN';
+export const CHANGE_CONTENT_FILL_COLOR = 'CHANGE_CONTENT_FILL_COLOR';
+export const CONTENT_PLACE_UP = 'CONTENT_PLACE_UP';
+export const CHANGE_CONTENT_STROKE_COLOR = 'CHANGE_CONTENT_STROKE_COLOR';
+export const CHANGE_CONTENT_STROKE_WIDTH = 'CHANGE_CONTENT_STROKE_WIDTH';
+
 
 export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
     let newSlideList: Array<Slide> = [];
@@ -73,6 +81,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                             contentList: defaultSlide.contentList,
                             background: defaultSlide.background,
                             activeContent: defaultSlide.activeContent,
+
                         },
                     ]
                 }
@@ -83,6 +92,15 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                 presentation: {
                     ...editor.presentation,
                     activeSlide: action.activeSlide,
+                    slideList: editor.presentation.slideList.map((slide: Slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            activeContent: '',
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
                 }
             }
         case DELETE_SLIDES:
@@ -208,7 +226,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     ),
                 }
             }
-        case SET_CONTENT_COORDINATES:
+        case DELETE_CONTENT:
             return {
                 ...editor,
                 presentation: {
@@ -216,12 +234,158 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                     slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
                         ? {
                             ...slide,
-                            contentList: slide.contentList.map((content) => content.id === action.contentId
+                            contentList: [...slide.contentList].filter((content) => content.id !== slide.activeContent)
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CONTENT_PLACE_UP:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    zIndex: content.zIndex + 1,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CONTENT_PLACE_DOWN:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    zIndex: content.zIndex - 1,
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_FILL_COLOR:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        fillColor: action.color
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_STROKE_COLOR:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        strokeColor: action.color
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case CHANGE_CONTENT_STROKE_WIDTH:
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: [...slide.contentList].map((content) => content.id === slide.activeContent
+                                ? {
+                                    ...content,
+                                    type: {
+                                        ...content.type,
+                                        strokeWeight: action.width
+                                    },
+                                }
+                                : {
+                                    ...content
+                                }
+                            )
+                        }
+                        : {
+                            ...slide,
+                        }
+                    ),
+                }
+            }
+        case SET_CONTENT_COORDINATES:
+            //console.log('action: ' + action.x + ' ' + action.y + ' activeContent: ' + editor.presentation.slideList[0].activeContent)
+            return {
+                ...editor,
+                presentation: {
+                    ...editor.presentation,
+                    slideList: editor.presentation.slideList.map((slide) => slide.id === editor.presentation.activeSlide
+                        ? {
+                            ...slide,
+                            contentList: slide.contentList.map((content) => content.id === slide.activeContent
                                 ? {
                                     ...content,
                                     coordinates: {
-                                        x: action.x,
-                                        y: action.y
+                                        x: action.x as number,
+                                        y: action.y as number
                                     }
 
                                 }
@@ -251,7 +415,7 @@ export const editorReducer = (editor: Editor, action: AnyAction): Editor => {
                         }
                     ),
                 }
-            }    
+            }
         default:
             return editor
     }

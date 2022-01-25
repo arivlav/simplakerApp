@@ -13,11 +13,17 @@
   margin: 0 0 10px 0;
 }
 
+.RightBarContainer__form-group_hide {
+  display: none;
+}
+
 .RightBarContainer__label {
   font-size: 16px;
   line-height: 1.5;
   font-weight: 500;
-  font-style: normal 
+  font-style: normal;
+  display: block;
+  width: 100%; 
 }
 
 .RightBarContainer__inputText{
@@ -26,4 +32,21 @@
   line-height: 1.3;
   letter-spacing: 0.035em;
   font-weight: 400;
+}
+
+.RightBarContainer__inputText_number{
+  width: 20px;
+}
+
+.RightBarContainer__btn {
+  font-weight: 600;
+  color: black;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 7px;
+  transition: 0.2s;
+  min-width: 70px;   
+}
+
+.RightBarContainer__btn_second {
+  margin: 0 0 0 5px;   
 }

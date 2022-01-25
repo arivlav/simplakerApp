@@ -35,34 +35,7 @@ function Slide(props: Props) {
   function isCheckedCheckbox(identifier: Identifier): boolean
   {
     const result = props.selectedSlides.selectedSlides.find((id: Identifier) => id === identifier);
-    if (result !== undefined) {
-      return true;
-    }
-    return false;
-  }
-
-  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, slide: SlideType) {
-    if (!props.isWorkspace) {
-      console.log('move slide', slide);
-    }
-    e.stopPropagation();
-  }
-
-  function dragEndHandler(e: React.DragEvent<HTMLDivElement>) {
-    e.stopPropagation();
-  }
-
-  function dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  function dropHandler(e: React.DragEvent<HTMLDivElement>, slide: SlideType) {
-    if (!props.isWorkspace) {
-      e.preventDefault();
-      console.log('slide', slide);
-    }
-    e.stopPropagation();
+    return (result !== undefined);
   }
 
   const backgroundValue = props.slide.background.value;
@@ -74,18 +47,12 @@ function Slide(props: Props) {
     props.makeActiveSlide(props.slide.id);
     props.turnRightBar(EMPTY_RIGHT_BAR);
     props.turnRightBar(ACTIVE_SLIDE_FORM);
-    e.stopPropagation();
   }
+
   return (
     <div 
       className="slide-miniature"
-      onClick={(e) => changeActiveSlide(e)} 
-      draggable={props.draggable}
-      onDragStart={(e) => dragStartHandler(e, props.slide)}
-      onDragLeave={(e) => dragEndHandler(e)}
-      onDragOver={(e) => dragOverHandler(e)}
-      onDragEnd={(e) => dragEndHandler(e)}
-      onDrop={(e) => dropHandler(e, props.slide)}>
+      onClick={(e) => changeActiveSlide(e)} >
       <div className={(!props.selectedSlides.selectedMode || props.isWorkspace) ? "slide-miniature__checkbox" : "slide-miniature__checkbox slide-miniature__checkbox_visible"}>
         <input type="checkbox" defaultValue={props.slide.id} checked={isCheckedCheckbox(props.slide.id)} onChange={(e) => toggleCheckbox(e)} onClick={(e) => {e.stopPropagation()}}  />
       </div>
@@ -105,6 +72,7 @@ function mapStateToProps(state: RootState) {
   return {
     activeSlide: state.editor.presentation.activeSlide,
     selectedSlides: state.editor.presentation.selectedSlides,
+    currentSlide: currentSlide,
     // contentList: currentSlide?.contentList as Array<ElementType>,
   }
 }

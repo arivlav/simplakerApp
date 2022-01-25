@@ -1,62 +1,75 @@
 import React from 'react';
 import './ColorPicker.css';
 import { Background, Slide } from 'src/types';
-import { changeSlideBackground } from 'src/store/actionCreators/editorAction'
+import { changeContentFillColor, changeContentStrokeColor, changeSlideBackground } from 'src/store/actionCreators/editorAction'
 import { connect } from 'react-redux'
 import { RootState } from 'src/store/store'
 import Circle from '../../WorkspaceContainer/Slide/Content/Primitive/PrimitiveCircle';
 import { setDefaultSlideColor } from 'src/store/actionCreators/viewAction';
 import { isColor } from 'src/helpers/editorHelper';
 
-type SwitcherType ={
+type SwitcherType = {
     type: string
 }
 
 function ColorPicker(props: Props) {
-    const currentColor = props.currentSlide?.background.value  as string;
-    let backgroundColor: string = (isColor(currentColor)) ? currentColor : props.defaultSlideColor;
+    let defaultValue = '';
+    switch (props.type) {
+        case "Slide":
+            const currentColor = props.currentSlide?.background.value as string;
+            defaultValue = (isColor(currentColor)) ? currentColor : props.defaultSlideColor;
+            break;
+        case "ContentFillColor":
+            defaultValue = props.currentContent?.type.fillColor as string;
+            break;
+        case "ContentStrokeColor":
+            defaultValue = props.currentContent?.type.strokeColor as string;
+            break;
+    }
+
     function changeColor(evt: React.ChangeEvent<HTMLInputElement>) {
         switch (props.type) {
-            case "Slide": 
+            case "Slide":
                 props.changeSlideBackground({
                     type: props.currentSlide?.background.type as string,
                     value: evt.target.value
                 });
                 props.setDefaultSlideColor(evt.target.value);
-            break;    
+                break;
+            case "ContentFillColor":
+                props.changeContentFillColor(evt.target.value);
+                break;
+            case "ContentStrokeColor":
+                props.changeContentStrokeColor(evt.target.value);
         }
     }
     return (
         <div>
-                <input type="color" value={backgroundColor} onChange={(e) => changeColor(e)} />
-            {/* {currentColor};
-            <div>
-                <svg width="100%" height="400" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="45" cy="300" r="20" fill={currentColor} />
-                    <text x="75" y="305" fill={currentColor} fontFamily="Roboto" fontStyle="bold" fontSize="16pt">
-                        Test ColorPicker
-                    </text>
-                </svg>
-            </div> */}
+            <input type="color" value={defaultValue} onChange={(e) => changeColor(e)} />
         </div>
     );
 }
 
 function mapStateToProps(state: RootState) {
+    let currentSlide = state.editor.presentation.slideList.find((slide) => slide.id === state.editor.presentation.activeSlide);
+    let currentContent = currentSlide?.contentList.find((content) => content.id === currentSlide?.activeContent);
     return {
         activeSlide: state.editor.presentation.activeSlide,
-        currentSlide: state.editor.presentation.slideList.find((slide) => slide.id === state.editor.presentation.activeSlide),
+        currentSlide: currentSlide,
         defaultSlideColor: state.view.defaultSettings.slideColor,
+        currentContent: currentContent,
     }
 }
-  
+
 const mapDispatchToProps = (dispatch: Function) => {
     return {
         changeSlideBackground: (newBackground: Background) => dispatch(changeSlideBackground(newBackground)),
         setDefaultSlideColor: (color: string) => dispatch(setDefaultSlideColor(color)),
+        changeContentFillColor: (color: string) => dispatch(changeContentFillColor(color)),
+        changeContentStrokeColor: (color: string) => dispatch(changeContentStrokeColor(color)),
     }
 }
-  
+
 type StateProps = ReturnType<typeof mapStateToProps>
 type DispatchProps = ReturnType<typeof mapDispatchToProps>
 

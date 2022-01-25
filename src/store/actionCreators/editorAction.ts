@@ -17,7 +17,13 @@ import {
     ADD_CONTENT,
     SET_CONTENT_COORDINATES,
     ACTIVE_CONTENT,
-    TOGGLE_PRESENTATION_MODE
+    TOGGLE_PRESENTATION_MODE,
+    DELETE_CONTENT,
+    CONTENT_PLACE_DOWN,
+    CONTENT_PLACE_UP,
+    CHANGE_CONTENT_STROKE_WIDTH,
+    CHANGE_CONTENT_FILL_COLOR,
+    CHANGE_CONTENT_STROKE_COLOR
 } from 'src/store/ruducers/editorReducer'
 
 export function changeStateEditor(editor: Editor) {
@@ -113,7 +119,7 @@ export function addContent(contentType: string, imageUrl: string = ''): AnyActio
     }
 }
 
-export function setCoordinates(contentId: string, x: number, y: number): AnyAction {
+export function setCoordinates(x: number, y: number): AnyAction {
     return {
         type: SET_CONTENT_COORDINATES,
         x: x,
@@ -128,8 +134,47 @@ export function setActiveContent(activeContent: string): AnyAction {
     }
 }
 
+export function deleteContent(): AnyAction {
+    return {
+        type: DELETE_CONTENT,
+    }
+}
+
 export function togglePresentationMode(): AnyAction {
     return {
         type: TOGGLE_PRESENTATION_MODE,
+    }
+}
+
+export function contentUp(): AnyAction {
+    return {
+        type: CONTENT_PLACE_UP,
+    }
+}
+
+export function contentDown(): AnyAction {
+    return {
+        type: CONTENT_PLACE_DOWN,
+    }
+}
+
+export function changeContentFillColor(color: string): AnyAction {
+    return {
+        type: CHANGE_CONTENT_FILL_COLOR,
+        color: color,
+    }
+}
+
+export function changeContentStrokeColor(color: string): AnyAction {
+    return {
+        type: CHANGE_CONTENT_STROKE_COLOR,
+        color: color,
+    }
+}
+
+export function changeContentStrokeWidth(width: number): AnyAction {
+    return {
+        type: CHANGE_CONTENT_STROKE_WIDTH,
+        width: width,
     }
 }

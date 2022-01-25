@@ -15,8 +15,8 @@ export const defaultContent: Content = {
         imageUrl: '',
         //dlya promitives
         type: '',
-        strokeColor: '',
-        fillColor: '',
+        strokeColor: '#123456',
+        fillColor: '#654321',
         strokeWeight: 2,
         //dlya texta
         text: 'Text',

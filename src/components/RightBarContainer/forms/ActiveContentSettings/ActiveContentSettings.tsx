@@ -1,64 +1,56 @@
 import React from 'react';
 import './ActiveContentSettings.css';
 import { connect } from 'react-redux'
-import { RootState } from 'src/store/store'
+import { RootState, store } from 'src/store/store'
 import { Content as ElementType, Identifier, Point } from 'src/types'
 import Select from 'src/components/TopBar/Bars/ToolBar/Select/Select'
 import ColorPicker from 'src/components/RightBarContainer/ColorPicker/ColorPicker';
 import { Background } from 'src/types';
-import { changeSlideBackground } from 'src/store/actionCreators/editorAction';
+import { changeContentStrokeWidth, changeSlideBackground, contentDown, contentUp } from 'src/store/actionCreators/editorAction';
+import { showModal } from 'src/store/actionCreators/viewAction';
+import { DELETE_CONTENT_CONFIRM } from 'src/components/Modal/Modal';
 
 function ActiveContentSettings(props: Props) {
-    // enum BackgroundType { Color = "color", Image = "image" };
-    // let backgroundType = props.currentSlide?.background.type as string;
-    // let selectList = [
-    //     { id: 'color', value: 'color', selected: backgroundType === 'color' },
-    //     { id: 'image', value: 'image', selected: backgroundType === 'image' },
-    // ];
-    // let selectedValue: string;
-    // let element: JSX.Element;
-    // if (backgroundType === BackgroundType.Color) {
-    //     selectedValue = BackgroundType.Color;
-    //     element = <ColorPicker type={"Slide"} />;
-    // } else {
-    //     selectedValue = BackgroundType.Image;
-    //     element = <input type="file" name="imageSlideDialog" accept="image/*" onChange={(e) => openAndSaveImage(e)} />;
-    // }
 
-    // function changeSlideBack(e: React.ChangeEvent<HTMLSelectElement>) {
-    //     props.changeSlideBackground({
-    //         type: e.target.value,
-    //         value: props.currentSlide?.background.value as string,
-    //     });
-    // }
+    function removeContent() {
+        store.dispatch(showModal(DELETE_CONTENT_CONFIRM));
+    }
 
-    // function openAndSaveImage(e: React.ChangeEvent<HTMLInputElement>) {
-    //     const inputFile = e.target; 
-    //     const fileDialog = inputFile.files as FileList;    
-    //     if (fileDialog[0] !== null) {
-    //         let reader = new FileReader();
-    //         reader.readAsDataURL(fileDialog[0]);
-    //         reader.onload = function (e) {
-    //             const newVal = e.target as FileReader;
-    //             props.changeSlideBackground({
-    //                 type: props.currentSlide?.background.type as string,
-    //                 value: newVal.result as string,
-    //             });
-    //         };
-    //     }
-    // }
+    function changeCurrentStrokeWidth(evt: React.SyntheticEvent<HTMLInputElement, Event>) {
+        const target = evt.target as HTMLButtonElement;
+        props.changeContentStrokeWidth(Number(target.value));
+    }
+
+    const isImage = (props.currentContent !== undefined && props.currentContent.name === 'image');
+    const isSvg = (props.currentContent !== undefined && props.currentContent.name !== 'image'  && props.currentContent.name !== 'text');
+    const isText = (props.currentContent !== undefined && props.currentContent.name === 'text');
 
     return (
         <div>
             <div className="RightBarContainer__form-group">
-                <label className="RightBarContainer__label">Background</label>
-                <p>{props.currentContent.id}</p>
-                {/* <Select title="Select background type" className="select select__fontFamily RightBarContainer__inputText" selectedValue={selectedValue} elements={selectList} onchange={changeSlideBack} /> */}
+                <h3>Content Settings</h3>
             </div>
-            {/* <div className="RightBarContainer__form-group">
-                <label className="RightBarContainer__label">{(backgroundType === "color") ? 'Color' : 'Image'}</label>
-                {element}
-            </div> */}
+            <div className={(isSvg) ? "RightBarContainer__form-group" : "RightBarContainer__form-group RightBarContainer__form-group_hide"}>
+                <label className="RightBarContainer__label">Fill color</label>
+                <ColorPicker type={"ContentFillColor"} />
+            </div>
+            <div className={(isSvg) ? "RightBarContainer__form-group" : "RightBarContainer__form-group RightBarContainer__form-group_hide"}>
+                <label className="RightBarContainer__label">Stroke color</label>
+                <ColorPicker type={"ContentStrokeColor"} />
+            </div>
+            <div className={(isSvg) ? "RightBarContainer__form-group" : "RightBarContainer__form-group RightBarContainer__form-group_hide"}>
+                <label className="RightBarContainer__label">Stroke width</label>
+                <input className="RightBarContainer__inputText RightBarContainer__inputText_number" type="text" name="Title" defaultValue={(props.currentContent !== undefined) ? props.currentContent.type.strokeWeight : ''} onChange={(evt) => changeCurrentStrokeWidth(evt)} />
+                
+            </div>
+            <div className="RightBarContainer__form-group">
+                <label className="RightBarContainer__label">Place</label>
+                <button className="RightBarContainer__btn" onClick={() => props.contentUp()}>Up</button>
+                <button className="RightBarContainer__btn RightBarContainer__btn_second" onClick={() => props.contentDown()}>Down</button>
+            </div>
+            <div className="RightBarContainer__form-group">
+                <button className="RightBarContainer__btn" onClick={removeContent}>Delete content</button>
+            </div>
         </div>
     );
 }
@@ -77,6 +69,9 @@ function mapStateToProps(state: RootState) {
 const mapDispatchToProps = (dispatch: Function) => {
     return {
         changeSlideBackground: (newBackground: Background) => dispatch(changeSlideBackground(newBackground)),
+        contentUp: () => dispatch(contentUp()),
+        contentDown: () => dispatch(contentDown()),
+        changeContentStrokeWidth: (width: number) => dispatch(changeContentStrokeWidth(width)),
     }
 }
 

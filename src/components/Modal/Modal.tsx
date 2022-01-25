@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { RootState, store } from 'src/store/store'
 import { showModal, closeModal, turnRightBar } from 'src/store/actionCreators/viewAction'
 import { ACTIVE_CONTENT_FORM, ACTIVE_SLIDE_FORM, EMPTY_RIGHT_BAR } from 'src/components/RightBarContainer/RightBarContainer'
-import { newPresentation, deleteSlides, openPresentation, deleteSlide, addContent, setActiveContent } from 'src/store/actionCreators/editorAction'
+import { newPresentation, deleteSlides, openPresentation, deleteSlide, addContent, deleteContent } from 'src/store/actionCreators/editorAction'
 import { clearHistory } from 'src/store/actionCreators/historyAction'
 import SingleFooterButton from 'src/components/Modal/ModalElements/Buttons/SingleFooterButton'
 import TwoFooterButton from 'src/components/Modal/ModalElements/Buttons/TwoFooterButton'
@@ -31,6 +31,7 @@ export const NOT_CHOICE_SLIDES = 6;
 export const CONFIRM_DELETE_SLIDES = 7;
 export const CONFIRM_DELETE_SLIDE = 8;
 export const ADD_IMAGE = 9;
+export const DELETE_CONTENT_CONFIRM = 10;
 
 function createNewPresentation() {
     store.dispatch(newPresentation());
@@ -90,6 +91,12 @@ function addImage() {
     }
 }
 
+function deleteContentConfirm() {
+    store.dispatch(deleteContent());
+    store.dispatch(closeModal());
+    store.dispatch(turnRightBar(ACTIVE_SLIDE_FORM));
+}
+
 function renderModalInner(typeModal: Number): ModalInner {
     let modalInner: ModalInner = {
         header: '',
@@ -146,6 +153,14 @@ function renderModalInner(typeModal: Number): ModalInner {
                 body: `<p>Add image: <input type="file" name="fileImageDialog"></p>`,
                 footer: <TwoFooterButton title="Confirm" onclick={addImage} />,
             }
+            break;
+        case DELETE_CONTENT_CONFIRM:
+            modalInner = {
+                header: 'Confirmation',
+                body: `<p>Do you really want to delete the active content?</p>`,
+                footer: <TwoFooterButton title="Confirm" onclick={deleteContentConfirm} />,
+            };
+
     }
     return modalInner;
 }

@@ -29,29 +29,47 @@ function Content(props: Props) {
   const contentRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const emptyRef = React.useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
 
-  useDragAndDrop(contentRef, slideRatio, props.content);
-  //console.log('вот' + newCoordinates.x);
+  const coord = useDragAndDrop(contentRef, slideRatio, props.content, setContentCoordinates);
 
+  function setContentCoordinates(position: Point) {
+    // props.setCoordinates(position.x, position.y);
+    // console.log(props.currentContent.coordinates);
+    // changeActiveContent(e);
+  }
 
   function changeActiveContent(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    e.stopPropagation();
-    e.preventDefault();
     if (props.modeEditor !== "view") {
       props.setActiveContent(props.content.id);
       props.turnRightBar(EMPTY_RIGHT_BAR);
       props.turnRightBar(ACTIVE_CONTENT_FORM);
     }
+    if (props.draggable) e.stopPropagation();
   }
 
+  contentStyle.zIndex = props.content.zIndex;
   switch (props.content.name) {
     case "image":
       elementStyle.objectFit = 'contain';
       elementStyle.width = '100%';
       elementStyle.maxHeight = '100%';
       contentStyle.width = slideRatio * props.content.width + 'px';
-      contentStyle.left = slideRatio * props.content.coordinates.x;
-      contentStyle.top = slideRatio * props.content.coordinates.y;
+      contentStyle.left = slideRatio * coord.x;
+      contentStyle.top = slideRatio * coord.y;
       element = <img src={props.content.type.imageUrl} style={elementStyle} />;
+      break;
+    case "circle":
+      contentStyle.width = slideRatio * props.content.width;
+      contentStyle.height = contentStyle.width;
+      contentStyle.left = slideRatio * coord.x;
+      contentStyle.top = slideRatio * coord.y;
+      element = <svg>
+          <circle r={contentStyle.width/2 - props.content.type.strokeWeight} 
+                  cx={contentStyle.width/2} 
+                  cy={contentStyle.width/2} 
+                  fill={props.content.type.fillColor} 
+                  stroke={props.content.type.strokeColor} 
+                  strokeWidth={(props.content.type.strokeWeight >= 0 && props.content.type.strokeWeight <= 5) ? props.content.type.strokeWeight : 6}/>
+        </svg>;
       break;
     default:
       element = <span></span>
@@ -61,7 +79,9 @@ function Content(props: Props) {
       ref={(props.draggable) ? contentRef : emptyRef}
       style={contentStyle}
       onClick={(e) => changeActiveContent(e)}
-      onMouseDown={(e) => changeActiveContent(e)}>
+      onMouseDown={(e) => changeActiveContent(e)}
+      onMouseUp={() => setContentCoordinates(coord)}>
+
       {element}
     </div>
   );
@@ -84,7 +104,7 @@ const mapDispatchToProps = (dispatch: Function) => {
     // selectedSlidesDelete: (slide: Identifier) => dispatch(selectedSlidesDelete(slide)),
     // selectedSlidesAdd: (slide: Identifier) => dispatch(selectedSlidesAdd(slide)),
     turnRightBar: (rightBarContent: Number) => dispatch(turnRightBar(rightBarContent)),
-    //setCoordinates: (x: number, y: number) => dispatch(setCoordinates(x, y)),
+    setCoordinates: (x: number, y: number) => dispatch(setCoordinates(x, y)),
     setActiveContent: (activeCont: string) => dispatch(setActiveContent(activeCont)),
   }
 }

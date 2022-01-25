@@ -1,7 +1,4 @@
-import { setMaxListeners } from 'process';
 import React from 'react';
-import { setCoordinates } from 'src/store/actionCreators/editorAction';
-import { store } from 'src/store/store';
 import { Content, Identifier, Point } from "src/types"
 
 export const SLIDE_HEIGHT = 900;
@@ -30,25 +27,19 @@ export const useResize = (myRef: React.MutableRefObject<HTMLDivElement>) => {
     return { width, height }
 }
 
-export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ratio: number, content: Content) => {
-    let newPos: Point = {
-        x: content.coordinates.x,
-        y: content.coordinates.y
-    };
-
+export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ratio: number, content: Content, setContentCoordinates: Function): Point => {
+    const [newCoord, setCoord] = React.useState({x: 0, y: 0});
     React.useEffect(() => {
         const currentContent = myRef.current;
-
         let startPos: Point;
-
-
+        let newPos: Point;
         function handleMouseDown(e: MouseEvent): void {
             startPos = {
                 x: e.pageX,
                 y: e.pageY,
             };
-            document.addEventListener("mousemove", handleMouseMove);
-            document.addEventListener("mouseup", handleMouseUp);
+            window.addEventListener("mousemove", handleMouseMove);
+            window.addEventListener("mouseup", handleMouseUp);
         }
 
         function handleMouseMove(e: MouseEvent): void {
@@ -62,20 +53,23 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
                     y: ratio * content.coordinates.y + delta.y
                 }
 
-                if (currentContent !== null) currentContent.style.left = String(newPos.x) + 'px';
-                if (currentContent !== null) currentContent.style.top = String(newPos.y) + 'px';
+                setCoord(newPos);
+
+                if (currentContent !== undefined && currentContent !== null) {
+                    currentContent.style.left = String(newPos.x) + 'px';
+                    currentContent.style.top = String(newPos.y) + 'px';
+                }
             }
         }
 
         function handleMouseUp(): void {
-            if (newPos) {
-                //store.dispatch(setCoordinates(content.id, newPos.x/ratio, newPos.y/ratio));
-            }
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
+            //setContentCoordinates(newPos.x/ratio, newPos.y/ratio);
+            // console.log('ушло ' + newPos.x/ratio + ' ' + newPos.y/ratio);
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseup", handleMouseUp);
         }
 
-        if (currentContent != null)
+        if (currentContent !== undefined)
             currentContent.addEventListener("mousedown", handleMouseDown);
 
         return () => {
@@ -84,6 +78,8 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
             }
         };
     }, [myRef]);
+    console.log(newCoord);
+    return newCoord;
 }
 
 export function generateIdentifier(): Identifier {
