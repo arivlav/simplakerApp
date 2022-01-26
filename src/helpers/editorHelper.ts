@@ -41,7 +41,7 @@ export const useDragAndDrop = (myRef: React.MutableRefObject<HTMLDivElement>, ra
                 currentContent.removeEventListener("mousedown", handleMouseDown);
             }
         };
-    }, []);    
+    }, [myRef]);    
 
     function handleMouseDown(e: MouseEvent): void {
         startPos.current.x = e.pageX;
